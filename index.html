@@ -125,6 +125,22 @@
         input::placeholder {
             color: rgba(43, 38, 34, 0.5);
         }
+
+        /* Make entire date input clickable without JS (fixes iframe security issue) */
+        input[type="date"] {
+            position: relative;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-brand-terracotta selection:text-white">
@@ -202,59 +218,63 @@
             <!-- 2x2 Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
                 
-                <!-- Card 1 -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal">
+                <!-- Card 1: Carrots -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal">
                     <div class="tilt-card-content flex flex-col h-full justify-between">
                         <div>
+                            <div id="dish1-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
                             <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Charred Heirloom Carrots, Whipped Burrata</h3>
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Honey Glazed Baby Carrots</h3>
                                 <span class="text-brand-bronze font-serif text-xl">$16</span>
                             </div>
                             <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
                         </div>
-                        <p class="text-brand-text/70 font-light">Roasted carrots, smoked honey, toasted hazelnut.</p>
+                        <p class="text-brand-text/70 font-light">Roasted heirloom carrots, smoked honey, whipped feta.</p>
                     </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal delay-100">
+                <!-- Card 2: Mushroom -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal delay-100">
                     <div class="tilt-card-content flex flex-col h-full justify-between">
                         <div>
+                            <div id="dish2-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
                             <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Pan-Seared Scallops</h3>
-                                <span class="text-brand-bronze font-serif text-xl">$28</span>
-                            </div>
-                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
-                        </div>
-                        <p class="text-brand-text/70 font-light">Brown butter, citrus, crispy capers.</p>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal">
-                    <div class="tilt-card-content flex flex-col h-full justify-between">
-                        <div>
-                            <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Slow-Roasted Lamb Shoulder</h3>
-                                <span class="text-brand-bronze font-serif text-xl">$34</span>
-                            </div>
-                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
-                        </div>
-                        <p class="text-brand-text/70 font-light">Salsa verde, charred lemon, flatbread.</p>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal delay-100">
-                    <div class="tilt-card-content flex flex-col h-full justify-between">
-                        <div>
-                            <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Wild Mushroom Risotto</h3>
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Foraged Mushroom Risotto</h3>
                                 <span class="text-brand-bronze font-serif text-xl">$22</span>
                             </div>
                             <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
                         </div>
-                        <p class="text-brand-text/70 font-light">Aged parmesan, thyme, black pepper.</p>
+                        <p class="text-brand-text/70 font-light">Wild mushrooms, aged parmesan, fresh thyme, black pepper.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Scallop -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal">
+                    <div class="tilt-card-content flex flex-col h-full justify-between">
+                        <div>
+                            <div id="dish3-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
+                            <div class="flex justify-between items-start gap-4 mb-4">
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Pan-Seared Scallop</h3>
+                                <span class="text-brand-bronze font-serif text-xl">$28</span>
+                            </div>
+                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
+                        </div>
+                        <p class="text-brand-text/70 font-light">Brown butter, citrus glaze, served in-shell.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Tart -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal delay-100">
+                    <div class="tilt-card-content flex flex-col h-full justify-between">
+                        <div>
+                            <div id="dish4-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
+                            <div class="flex justify-between items-start gap-4 mb-4">
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Lemon Curd Tart</h3>
+                                <span class="text-brand-bronze font-serif text-xl">$14</span>
+                            </div>
+                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
+                        </div>
+                        <p class="text-brand-text/70 font-light">Shortbread crust, torched meringue top.</p>
                     </div>
                 </div>
 
@@ -269,13 +289,32 @@
             <!-- Left: Form -->
             <div class="w-full lg:w-1/2 reveal">
                 <h2 class="font-serif text-4xl md:text-5xl mb-12">We'd love to have you.</h2>
-                <form class="space-y-10" onsubmit="event.preventDefault();">
+                
+                <!-- Success Message Container -->
+                <div id="reservation-success" class="hidden flex-col items-start justify-center h-full space-y-6 py-8">
+                    <div class="w-16 h-16 rounded-full border border-brand-terracotta flex items-center justify-center text-brand-terracotta mb-2">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-3xl text-brand-bg">Request Received.</h3>
+                    <p class="text-brand-bg/80 font-light text-lg leading-relaxed">
+                        Thank you for choosing Ember & Oak. We've sent an email with your reservation details to your inbox. We look forward to hosting you.
+                    </p>
+                    <button onclick="window.location.reload()" class="btn-outline border border-brand-bg/30 text-brand-bg px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase hover:bg-white/5 mt-4 transition-colors">
+                        Book Another
+                    </button>
+                </div>
+
+                <form id="reservation-form" class="space-y-10">
                     <div>
                         <input type="text" placeholder="Full Name" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <input type="date" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
-                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent" required>
+                        <input type="email" placeholder="Email Address" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
+                        <input type="tel" placeholder="Contact Number" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <input type="date" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta cursor-pointer bg-transparent" style="color-scheme: dark;" required>
+                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent cursor-pointer" required>
                             <option value="" disabled selected class="text-brand-text">Time</option>
                             <option value="17:30" class="text-brand-text">5:30 PM</option>
                             <option value="18:00" class="text-brand-text">6:00 PM</option>
@@ -288,7 +327,7 @@
                         </select>
                     </div>
                     <div>
-                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent" required>
+                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent cursor-pointer" required>
                             <option value="" disabled selected class="text-brand-text">Party Size</option>
                             <option value="1" class="text-brand-text">1 Person</option>
                             <option value="2" class="text-brand-text">2 People</option>
@@ -347,6 +386,30 @@
     <!-- INTERACTION & 3D ENGINE SCRIPTS -->
     <script type="module">
         import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+        // --- 0. Form Submission Handling ---
+        const reservationForm = document.getElementById('reservation-form');
+        const successMessage = document.getElementById('reservation-success');
+
+        if (reservationForm && successMessage) {
+            reservationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // UX: Button loading state
+                const submitBtn = reservationForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerText;
+                submitBtn.innerText = 'Processing...';
+                submitBtn.style.opacity = '0.7';
+
+                // Simulate brief network delay for realism
+                setTimeout(() => {
+                    reservationForm.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    successMessage.classList.add('flex');
+                    successMessage.style.animation = 'fadeIn 0.5s ease-out forwards';
+                }, 800);
+            });
+        }
 
         // --- 1. UI Interactions (Vanilla Scroll Reveals & Tilt Cards) ---
         
@@ -700,6 +763,168 @@
 
             animate();
         }
+
+        // --- 3. Mini 3D Scenes for Menu Cards ---
+        
+        function initMiniScene(containerId, buildDishCallback) {
+            const container = document.getElementById(containerId);
+            if (!container || !isWebGLAvailable()) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 10);
+            camera.position.set(0, 2.5, 4);
+            camera.lookAt(0, 0, 0);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xfff0e6, 1.8);
+            scene.add(ambientLight);
+            
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+            dirLight.position.set(3, 5, 2);
+            scene.add(dirLight);
+
+            const dishGroup = new THREE.Group();
+            scene.add(dishGroup);
+
+            // Execute the specific dish geometry builder
+            buildDishCallback(dishGroup);
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                if(container.clientWidth > 0) {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                }
+            });
+
+            // Interactive rotation on hover
+            let isHovered = false;
+            container.addEventListener('mouseenter', () => isHovered = true);
+            container.addEventListener('mouseleave', () => isHovered = false);
+
+            // Lazy rendering to save performance
+            let isVisible = false;
+            const observer = new IntersectionObserver(entries => {
+                isVisible = entries[0].isIntersecting;
+            });
+            observer.observe(container);
+
+            function animateMini() {
+                requestAnimationFrame(animateMini);
+                if (isVisible) {
+                    // Spin faster if hovered
+                    dishGroup.rotation.y += isHovered ? 0.03 : 0.005;
+                    // Gentle bobbing effect
+                    dishGroup.position.y = Math.sin(Date.now() * 0.002) * 0.1;
+                    renderer.render(scene, camera);
+                }
+            }
+            animateMini();
+        }
+
+        // Dish 1: Cutesy Carrots
+        initMiniScene('dish1-canvas', (group) => {
+            const carrotMat = new THREE.MeshStandardMaterial({ color: 0xD98C6B, roughness: 0.6 });
+            const greenMat = new THREE.MeshStandardMaterial({ color: 0x7C8B6F, roughness: 0.8 });
+            
+            for(let i=0; i<3; i++) {
+                const body = new THREE.Mesh(new THREE.ConeGeometry(0.25, 1.2, 16), carrotMat);
+                body.rotation.x = Math.PI; // point down
+                body.position.set((i-1)*0.4, 0, (Math.random()-0.5)*0.2);
+                body.rotation.z = (Math.random()-0.5)*0.4;
+                
+                // Cute puff of leaves
+                const leaf = new THREE.Mesh(new THREE.DodecahedronGeometry(0.2), greenMat);
+                leaf.position.y = -0.6; // relative to inverted cone
+                body.add(leaf);
+                
+                group.add(body);
+            }
+            group.position.y = 0.2;
+        });
+
+        // Dish 2: Plump Mushroom
+        initMiniScene('dish2-canvas', (group) => {
+            const stemMat = new THREE.MeshStandardMaterial({ color: 0xF1ECE3, roughness: 0.9 });
+            const capMat = new THREE.MeshStandardMaterial({ color: 0xB8985A, roughness: 0.7 });
+            const spotMat = new THREE.MeshStandardMaterial({ color: 0xF1ECE3, roughness: 1.0 });
+
+            const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.35, 0.8, 16), stemMat);
+            group.add(stem);
+
+            const cap = new THREE.Mesh(new THREE.SphereGeometry(0.8, 32, 16, 0, Math.PI*2, 0, Math.PI/2), capMat);
+            cap.position.y = 0.3;
+            cap.scale.y = 0.8;
+            group.add(cap);
+
+            // Cute spots
+            const spotPositions = [
+                {x: 0, y: 0.7, z: 0.3, s: 0.15}, {x: 0.4, y: 0.5, z: -0.2, s: 0.12},
+                {x: -0.5, y: 0.4, z: 0.1, s: 0.18}, {x: 0.2, y: 0.4, z: 0.6, s: 0.1}
+            ];
+            spotPositions.forEach(p => {
+                const spot = new THREE.Mesh(new THREE.SphereGeometry(p.s, 8, 8), spotMat);
+                spot.position.set(p.x, p.y, p.z);
+                spot.position.normalize().multiplyScalar(0.78);
+                spot.position.y *= 0.8; 
+                cap.add(spot);
+            });
+            group.position.y = -0.2;
+        });
+
+        // Dish 3: Scallop with Butter
+        initMiniScene('dish3-canvas', (group) => {
+            const shellMat = new THREE.MeshStandardMaterial({ color: 0xD98C6B, roughness: 0.5 });
+            const meatMat = new THREE.MeshStandardMaterial({ color: 0xfff5f0, roughness: 0.2 });
+            const butterMat = new THREE.MeshStandardMaterial({ color: 0xffd966, roughness: 0.1 });
+
+            // Shell
+            const shell = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 16, 0, Math.PI*2, Math.PI/2, Math.PI/2), shellMat);
+            shell.rotation.x = Math.PI;
+            shell.scale.set(1, 0.3, 1);
+            group.add(shell);
+
+            // Plump scallop
+            const meat = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.5, 32), meatMat);
+            meat.position.y = 0.2;
+            group.add(meat);
+
+            // Butter pat
+            const butter = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.1, 0.2), butterMat);
+            butter.position.set(0.1, 0.5, 0.1);
+            butter.rotation.y = 0.5;
+            group.add(butter);
+            
+            group.position.y = -0.2;
+        });
+
+        // Dish 4: Lemon Tart
+        initMiniScene('dish4-canvas', (group) => {
+            const crustMat = new THREE.MeshStandardMaterial({ color: 0xcca300, roughness: 0.8 });
+            const curdMat = new THREE.MeshStandardMaterial({ color: 0xffe666, roughness: 0.3 });
+            const creamMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1 });
+
+            const crust = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.7, 0.3, 32), crustMat);
+            group.add(crust);
+
+            const curd = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.31, 32), curdMat);
+            group.add(curd);
+
+            // Swirly meringue top
+            for(let i=0; i<3; i++) {
+                const cream = new THREE.Mesh(new THREE.SphereGeometry(0.25 - (i*0.08), 16, 16), creamMat);
+                cream.position.y = 0.2 + (i*0.15);
+                cream.position.x = Math.sin(i) * 0.05; // slight twist
+                group.add(cream);
+            }
+            group.position.y = -0.2;
+        });
+
     </script>
 </body>
 </html>
