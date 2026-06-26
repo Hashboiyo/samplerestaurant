@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ember & Oak | Modern plates, honest ingredients.</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (Play CDN for standalone file requirement) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#FAF7F2',
+                            surface: '#F1ECE3',
+                            text: '#2B2622',
+                            sage: '#7C8B6F',
+                            terracotta: '#D98C6B',
+                            bronze: '#B8985A'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    scale: {
+                        '103': '1.03',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Properties & Utilities */
+        :root {
+            --color-bg: #FAF7F2;
+            --color-surface: #F1ECE3;
+            --color-text: #2B2622;
+            --color-terracotta: #D98C6B;
+        }
+        
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
+        }
+
+        /* Premium multi-layered shadow */
+        .premium-shadow {
+            box-shadow: 
+                0 4px 6px -1px rgba(43, 38, 34, 0.03), 
+                0 10px 15px -3px rgba(43, 38, 34, 0.05), 
+                0 20px 25px -5px rgba(43, 38, 34, 0.04),
+                0 0 40px -10px rgba(217, 140, 107, 0.05); /* soft terracotta glow */
+        }
+
+        /* Button hover states */
+        .btn-primary {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 10px 25px -5px rgba(217, 140, 107, 0.4);
+        }
+        
+        .btn-outline {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .btn-outline:hover {
+            background-color: rgba(43, 38, 34, 0.03);
+        }
+
+        /* 3D Canvas Background Blending */
+        .canvas-container {
+            background: radial-gradient(circle at center, rgba(241, 236, 227, 0.8) 0%, rgba(250, 247, 242, 0) 70%);
+            mask-image: radial-gradient(black, transparent 80%);
+            -webkit-mask-image: radial-gradient(black, transparent 80%);
+        }
+
+        /* 3D Tilt Card Base */
+        .tilt-card {
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .tilt-card-content {
+            transform: translateZ(30px); /* Parallax inner text */
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Form styling */
+        input, select {
+            background: transparent;
+            border-bottom: 1px solid var(--color-text);
+            border-radius: 0;
+            padding: 0.5rem 0;
+            width: 100%;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+        input:focus, select:focus {
+            border-bottom-color: var(--color-terracotta);
+        }
+        input::placeholder {
+            color: rgba(43, 38, 34, 0.5);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-terracotta selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 py-6 px-8 flex justify-between items-center mix-blend-difference text-brand-surface pointer-events-none">
+        <div class="font-serif text-2xl tracking-wide pointer-events-auto cursor-pointer">E&O</div>
+        <div class="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase pointer-events-auto">
+            <a href="#story" class="hover:text-brand-terracotta transition-colors">Story</a>
+            <a href="#menu" class="hover:text-brand-terracotta transition-colors">Menu</a>
+            <a href="#reserve" class="hover:text-brand-terracotta transition-colors">Reserve</a>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden lg:justify-start lg:pl-32">
+        
+        <!-- 3D Canvas Container -->
+        <div id="canvas-container" class="canvas-container absolute inset-0 z-0 flex justify-center items-center lg:left-1/3 lg:w-2/3">
+            <!-- Canvas inserted here by JS -->
+        </div>
+
+        <div class="relative z-10 w-full max-w-xl px-8 text-center lg:text-left reveal">
+            <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl font-medium text-brand-text mb-6 tracking-tight leading-none drop-shadow-sm">
+                Ember <br/><span class="italic text-brand-sage">&</span> Oak
+            </h1>
+            <p class="text-xl md:text-2xl text-brand-text/80 font-light mb-10 tracking-wide">
+                Modern plates, honest ingredients.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                <a href="#reserve" class="btn-primary bg-brand-terracotta text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase hover:scale-103 text-center">
+                    Reserve a Table
+                </a>
+                <a href="#menu" class="btn-outline border border-brand-text text-brand-text px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase hover:scale-103 text-center">
+                    View Menu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. OUR STORY -->
+    <section id="story" class="py-32 px-8 bg-brand-surface/30">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="w-full md:w-1/3 flex justify-center reveal">
+                <!-- Minimal Wine Glass SVG Accent -->
+                <svg width="80" height="160" viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-brand-bronze stroke-current stroke-[1.5]">
+                    <!-- Bowl -->
+                    <path d="M10 20 C 10 70, 40 90, 40 90 C 40 90, 70 70, 70 20 Z" />
+                    <!-- Liquid line -->
+                    <line x1="15" y1="45" x2="65" y2="45" stroke-dasharray="2 4" />
+                    <!-- Stem -->
+                    <line x1="40" y1="90" x2="40" y2="150" />
+                    <!-- Base -->
+                    <line x1="20" y1="150" x2="60" y2="150" />
+                </svg>
+            </div>
+            <div class="w-full md:w-2/3 reveal delay-100">
+                <h2 class="font-serif text-4xl md:text-5xl text-brand-text mb-8">Simple, done well.</h2>
+                <div class="w-12 h-[1px] bg-brand-bronze mb-8"></div>
+                <p class="text-lg text-brand-text/80 leading-relaxed font-light">
+                    Ember & Oak started with one idea: let good ingredients speak for themselves. Our menu changes with the seasons, built around what's fresh from local farms that week. No long lists, no over-plated dishes — just food cooked with care and served without pretense.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SIGNATURE DISHES -->
+    <section id="menu" class="py-32 px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <h2 class="font-serif text-4xl md:text-5xl text-brand-text mb-4">Signature Dishes</h2>
+                <p class="text-brand-text/60 tracking-widest uppercase text-sm font-medium">A glimpse of the season</p>
+            </div>
+
+            <!-- 2x2 Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                
+                <!-- Card 1 -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal">
+                    <div class="tilt-card-content flex flex-col h-full justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-4 mb-4">
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Charred Heirloom Carrots, Whipped Burrata</h3>
+                                <span class="text-brand-bronze font-serif text-xl">$16</span>
+                            </div>
+                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
+                        </div>
+                        <p class="text-brand-text/70 font-light">Roasted carrots, smoked honey, toasted hazelnut.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal delay-100">
+                    <div class="tilt-card-content flex flex-col h-full justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-4 mb-4">
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Pan-Seared Scallops</h3>
+                                <span class="text-brand-bronze font-serif text-xl">$28</span>
+                            </div>
+                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
+                        </div>
+                        <p class="text-brand-text/70 font-light">Brown butter, citrus, crispy capers.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal">
+                    <div class="tilt-card-content flex flex-col h-full justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-4 mb-4">
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Slow-Roasted Lamb Shoulder</h3>
+                                <span class="text-brand-bronze font-serif text-xl">$34</span>
+                            </div>
+                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
+                        </div>
+                        <p class="text-brand-text/70 font-light">Salsa verde, charred lemon, flatbread.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="tilt-card bg-brand-surface rounded-3xl p-10 premium-shadow reveal delay-100">
+                    <div class="tilt-card-content flex flex-col h-full justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-4 mb-4">
+                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Wild Mushroom Risotto</h3>
+                                <span class="text-brand-bronze font-serif text-xl">$22</span>
+                            </div>
+                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
+                        </div>
+                        <p class="text-brand-text/70 font-light">Aged parmesan, thyme, black pepper.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. RESERVE A TABLE -->
+    <section id="reserve" class="py-32 px-8 bg-brand-text text-brand-bg">
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-20">
+            
+            <!-- Left: Form -->
+            <div class="w-full lg:w-1/2 reveal">
+                <h2 class="font-serif text-4xl md:text-5xl mb-12">We'd love to have you.</h2>
+                <form class="space-y-10" onsubmit="event.preventDefault();">
+                    <div>
+                        <input type="text" placeholder="Full Name" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <input type="date" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
+                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent" required>
+                            <option value="" disabled selected class="text-brand-text">Time</option>
+                            <option value="17:30" class="text-brand-text">5:30 PM</option>
+                            <option value="18:00" class="text-brand-text">6:00 PM</option>
+                            <option value="18:30" class="text-brand-text">6:30 PM</option>
+                            <option value="19:00" class="text-brand-text">7:00 PM</option>
+                            <option value="19:30" class="text-brand-text">7:30 PM</option>
+                            <option value="20:00" class="text-brand-text">8:00 PM</option>
+                            <option value="20:30" class="text-brand-text">8:30 PM</option>
+                            <option value="21:00" class="text-brand-text">9:00 PM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent" required>
+                            <option value="" disabled selected class="text-brand-text">Party Size</option>
+                            <option value="1" class="text-brand-text">1 Person</option>
+                            <option value="2" class="text-brand-text">2 People</option>
+                            <option value="3" class="text-brand-text">3 People</option>
+                            <option value="4" class="text-brand-text">4 People</option>
+                            <option value="5" class="text-brand-text">5 People</option>
+                            <option value="6" class="text-brand-text">6+ People</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary w-full bg-brand-terracotta text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase hover:scale-103 mt-4">
+                        Request Reservation
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right: Contact Details -->
+            <div class="w-full lg:w-1/2 flex flex-col justify-center reveal delay-100">
+                <div class="p-12 border border-brand-bg/10 rounded-3xl backdrop-blur-sm bg-white/5">
+                    <ul class="space-y-8 text-lg font-light tracking-wide text-brand-bg/80">
+                        <li class="flex items-start gap-4">
+                            <span class="text-brand-terracotta">·</span>
+                            214 Maple Street, Portland, OR 97209
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="text-brand-terracotta">·</span>
+                            (503) 555-0148
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="text-brand-terracotta">·</span>
+                            Tuesday–Sunday, 5:30 PM – 10:00 PM <br/>
+                            Closed Mondays.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. FOOTER -->
+    <footer class="py-12 px-8 border-t border-brand-text/10 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="font-serif text-2xl text-brand-text tracking-widest">
+            Ember & Oak
+        </div>
+        <div class="flex gap-8 text-sm tracking-widest uppercase font-medium">
+            <a href="#menu" class="hover:text-brand-terracotta transition-colors">Menu</a>
+            <a href="#reserve" class="hover:text-brand-terracotta transition-colors">Reserve</a>
+            <a href="#" class="hover:text-brand-terracotta transition-colors">Contact</a>
+        </div>
+        <div class="flex gap-6 text-sm tracking-widest uppercase text-brand-text/60">
+            <a href="#" class="hover:text-brand-terracotta transition-colors">IG</a>
+            <a href="#" class="hover:text-brand-terracotta transition-colors">FB</a>
+        </div>
+    </footer>
+
+    <!-- INTERACTION & 3D ENGINE SCRIPTS -->
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+        // --- 1. UI Interactions (Vanilla Scroll Reveals & Tilt Cards) ---
+        
+        // Scroll Reveal Observer
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+        const revealOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // 3D Tilt Card Effect
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReducedMotion) {
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                });
+            });
+        }
+
+
+        // --- 2. THREE.JS 3D Hero Scene ---
+
+        const container = document.getElementById('canvas-container');
+        
+        // WebGL Support Check
+        function isWebGLAvailable() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        if (!isWebGLAvailable()) {
+            // Fallback gracefully
+            container.innerHTML = '<div class="w-full h-full opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-terracotta to-transparent rounded-full blur-3xl"></div>';
+        } else {
+            init3DScene();
+        }
+
+        function init3DScene() {
+            // Scene Setup
+            const scene = new THREE.Scene();
+            // Optional subtle fog matching background
+            scene.fog = new THREE.FogExp2(0xFAF7F2, 0.04);
+
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 5, 10);
+            camera.lookAt(0, 0, 0);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap pixel ratio for performance
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // Group for all plate items
+            const plateGroup = new THREE.Group();
+            scene.add(plateGroup);
+
+            // --- Geometries & Materials ---
+            
+            // 1. Ceramic Plate
+            const plateGeo = new THREE.CylinderGeometry(3.5, 3.0, 0.2, 64);
+            const plateMat = new THREE.MeshStandardMaterial({ 
+                color: 0xF1ECE3, 
+                roughness: 0.15, 
+                metalness: 0.05 
+            });
+            const plate = new THREE.Mesh(plateGeo, plateMat);
+            plate.position.y = -0.1;
+            plate.receiveShadow = true;
+            plate.castShadow = true;
+            plateGroup.add(plate);
+
+            // Inner Plate Rim (Subtle detail)
+            const rimGeo = new THREE.TorusGeometry(3.2, 0.05, 16, 64);
+            const rim = new THREE.Mesh(rimGeo, plateMat);
+            rim.rotation.x = Math.PI / 2;
+            rim.position.y = 0.02;
+            plateGroup.add(rim);
+
+            // 2. Whipped Burrata (Central, soft, abstract)
+            const burrataGeo = new THREE.SphereGeometry(1.2, 64, 32);
+            burrataGeo.scale(1, 0.6, 1); // squashed organic shape
+            
+            // Alter vertices slightly for organic look
+            const pos = burrataGeo.attributes.position;
+            for(let i=0; i<pos.count; i++) {
+                const y = pos.getY(i);
+                if (y > 0) pos.setY(i, y + Math.random()*0.1);
+            }
+            burrataGeo.computeVertexNormals();
+
+            const burrataMat = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff, 
+                roughness: 0.3,
+                metalness: 0.0
+            });
+            const burrata = new THREE.Mesh(burrataGeo, burrataMat);
+            burrata.position.set(0, 0.4, 0);
+            burrata.castShadow = true;
+            burrata.receiveShadow = true;
+            plateGroup.add(burrata);
+
+            // 3. Charred Heirloom Carrots (Intersecting cylinders)
+            const carrotMat = new THREE.MeshStandardMaterial({ 
+                color: 0xD98C6B, 
+                roughness: 0.8,
+                metalness: 0.1
+            });
+            
+            const createCarrot = (x, y, z, rotX, rotY, rotZ, scale) => {
+                const geo = new THREE.CylinderGeometry(0.15, 0.05, 2.5, 16);
+                geo.translate(0, 1.25, 0); // Move origin to base
+                const mesh = new THREE.Mesh(geo, carrotMat);
+                mesh.position.set(x, y, z);
+                mesh.rotation.set(rotX, rotY, rotZ);
+                mesh.scale.setScalar(scale);
+                mesh.castShadow = true;
+                plateGroup.add(mesh);
+            };
+
+            createCarrot(0.2, 0.2, -0.5, Math.PI/2 - 0.2, 0.5, 0, 1);
+            createCarrot(-0.5, 0.3, 0.2, Math.PI/2 + 0.1, -0.8, 0, 0.9);
+            createCarrot(0.4, 0.1, 0.5, Math.PI/2, 2.5, 0, 1.1);
+
+            // 4. Accent Leaves / Sage drops
+            const leafGeo = new THREE.SphereGeometry(0.1, 8, 8);
+            leafGeo.scale(1, 0.2, 2);
+            const leafMat = new THREE.MeshStandardMaterial({ color: 0x7C8B6F, roughness: 0.6 });
+            
+            const leaf1 = new THREE.Mesh(leafGeo, leafMat);
+            leaf1.position.set(1.5, 0.1, 1.0);
+            leaf1.rotation.y = 0.5;
+            plateGroup.add(leaf1);
+            
+            const leaf2 = new THREE.Mesh(leafGeo, leafMat);
+            leaf2.position.set(-1.2, 0.1, -1.5);
+            leaf2.rotation.y = -1.2;
+            plateGroup.add(leaf2);
+
+            // 5. Metallic Fork (Resting beside the plate)
+            const forkGroup = new THREE.Group();
+            const metalMat = new THREE.MeshStandardMaterial({ 
+                color: 0xcccccc, 
+                roughness: 0.2, 
+                metalness: 0.8 
+            });
+            
+            // Handle
+            const handleGeo = new THREE.BoxGeometry(0.2, 0.05, 2.5);
+            const handle = new THREE.Mesh(handleGeo, metalMat);
+            handle.position.z = 1.25;
+            forkGroup.add(handle);
+            
+            // Neck
+            const neckGeo = new THREE.BoxGeometry(0.3, 0.05, 0.5);
+            const neck = new THREE.Mesh(neckGeo, metalMat);
+            neck.position.z = -0.25;
+            forkGroup.add(neck);
+
+            // Prongs
+            for(let i=0; i<4; i++) {
+                const prongGeo = new THREE.BoxGeometry(0.04, 0.04, 0.8);
+                const prong = new THREE.Mesh(prongGeo, metalMat);
+                prong.position.set(-0.11 + (i * 0.073), -0.02, -0.9);
+                // Slight curve down
+                prong.rotation.x = 0.1;
+                forkGroup.add(prong);
+            }
+
+            forkGroup.position.set(4.5, 0, 0);
+            forkGroup.rotation.y = -0.2;
+            forkGroup.castShadow = true;
+            scene.add(forkGroup);
+
+            // --- Particles (Steam Wisps) ---
+            const particleCount = 40;
+            const particlesGeo = new THREE.BufferGeometry();
+            const particlePos = new Float32Array(particleCount * 3);
+            const particleVel = [];
+
+            for(let i=0; i<particleCount; i++) {
+                particlePos[i*3] = (Math.random() - 0.5) * 2;     // x
+                particlePos[i*3+1] = Math.random() * 2;           // y
+                particlePos[i*3+2] = (Math.random() - 0.5) * 2;   // z
+                particleVel.push({
+                    y: 0.01 + Math.random() * 0.02,
+                    x: (Math.random() - 0.5) * 0.01,
+                    z: (Math.random() - 0.5) * 0.01
+                });
+            }
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+            
+            // Custom soft circle for particles
+            const createCircleTexture = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 32;
+                canvas.height = 32;
+                const ctx = canvas.getContext('2d');
+                const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+                gradient.addColorStop(0, 'rgba(255,255,255,0.4)');
+                gradient.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 32, 32);
+                return new THREE.CanvasTexture(canvas);
+            };
+
+            const particleMat = new THREE.PointsMaterial({
+                size: 0.8,
+                map: createCircleTexture(),
+                transparent: true,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending
+            });
+            const particleSystem = new THREE.Points(particlesGeo, particleMat);
+            scene.add(particleSystem);
+
+
+            // --- Lighting ---
+            const ambientLight = new THREE.AmbientLight(0xfff0e6, 1.2); // Warm ambient
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+            dirLight.position.set(5, 10, 5);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 1024;
+            dirLight.shadow.mapSize.height = 1024;
+            dirLight.shadow.camera.near = 0.5;
+            dirLight.shadow.camera.far = 25;
+            dirLight.shadow.camera.left = -10;
+            dirLight.shadow.camera.right = 10;
+            dirLight.shadow.camera.top = 10;
+            dirLight.shadow.camera.bottom = -10;
+            scene.add(dirLight);
+
+            // Soft rim light for depth
+            const rimLight = new THREE.PointLight(0xD98C6B, 2, 20);
+            rimLight.position.set(-5, 2, -5);
+            scene.add(rimLight);
+
+            // Ground plane for soft shadows
+            const planeGeo = new THREE.PlaneGeometry(50, 50);
+            const planeMat = new THREE.ShadowMaterial({ opacity: 0.08 });
+            const plane = new THREE.Mesh(planeGeo, planeMat);
+            plane.rotation.x = -Math.PI / 2;
+            plane.position.y = -0.2;
+            plane.receiveShadow = true;
+            scene.add(plane);
+
+
+            // --- State & Animation Management ---
+            let clock = new THREE.Clock();
+            let isVisible = true;
+            const isMobile = window.innerWidth < 768;
+
+            // Intersection Observer to pause rendering when scrolled past Hero
+            const observer = new IntersectionObserver((entries) => {
+                isVisible = entries[0].isIntersecting;
+            }, { threshold: 0 });
+            observer.observe(container);
+
+            // Scroll Parallax connection
+            let scrollY = 0;
+            window.addEventListener('scroll', () => {
+                scrollY = window.scrollY;
+            }, { passive: true });
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                if (!isVisible) return; // Lazy render
+
+                const delta = clock.getDelta();
+                const elapsedTime = clock.getElapsedTime();
+
+                // 1. Camera Parallax based on scroll (Ease back/scale down effect)
+                const targetZ = 10 + (scrollY * 0.015);
+                const targetY = 5 + (scrollY * 0.005);
+                camera.position.z += (targetZ - camera.position.z) * 0.1;
+                camera.position.y += (targetY - camera.position.y) * 0.1;
+                camera.lookAt(0, -scrollY*0.002, 0); // Look slightly down as we pull back
+
+                if (!prefersReducedMotion) {
+                    // 2. Rotate Plate slowly
+                    plateGroup.rotation.y += 0.2 * delta;
+
+                    // 3. Orbiting elements (Leaf variations via sin/cos)
+                    if (!isMobile) {
+                        leaf1.position.x = Math.cos(elapsedTime * 0.8) * 2;
+                        leaf1.position.z = Math.sin(elapsedTime * 0.8) * 2;
+                        leaf1.rotation.y += 0.01;
+
+                        leaf2.position.x = Math.sin(elapsedTime * 0.6 + Math.PI) * 2.2;
+                        leaf2.position.z = Math.cos(elapsedTime * 0.6 + Math.PI) * 2.2;
+                        leaf2.rotation.y -= 0.01;
+                    }
+
+                    // 4. Update Steam Particles
+                    if (!isMobile) {
+                        const positions = particleSystem.geometry.attributes.position.array;
+                        for(let i=0; i<particleCount; i++) {
+                            positions[i*3] += particleVel[i].x;
+                            positions[i*3+1] += particleVel[i].y;
+                            positions[i*3+2] += particleVel[i].z;
+
+                            // Reset particle if too high
+                            if (positions[i*3+1] > 4) {
+                                positions[i*3+1] = 0;
+                                positions[i*3] = (Math.random() - 0.5) * 2;
+                                positions[i*3+2] = (Math.random() - 0.5) * 2;
+                            }
+                        }
+                        particleSystem.geometry.attributes.position.needsUpdate = true;
+                    }
+                }
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+    </script>
+</body>
+</html>
