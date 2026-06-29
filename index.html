@@ -3,35 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ember & Oak | Modern plates, honest ingredients.</title>
+    <title>Foody - Premium Modern Restaurant</title>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter & Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS (Play CDN for standalone file requirement) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons for gorgeous UI elements -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            bg: '#FAF7F2',
-                            surface: '#F1ECE3',
-                            text: '#2B2622',
-                            sage: '#7C8B6F',
-                            terracotta: '#D98C6B',
-                            bronze: '#B8985A'
+                            DEFAULT: '#D11F36', // Gorgeous Foody Red from image_a39874.jpg
+                            hover: '#B01A2C',
+                            light: '#FFF0F2',
+                        },
+                        cream: {
+                            50: '#FAF8F5',
+                            100: '#F4F2EE', // Accurate base cream color from image_a39874.jpg
+                            200: '#EBE8E2',
+                            300: '#DDD9D0',
+                        },
+                        dark: {
+                            900: '#111111',
+                            800: '#222222',
+                            700: '#444444',
                         }
                     },
                     fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
                         sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
                     },
-                    scale: {
-                        '103': '1.03',
+                    boxShadow: {
+                        'premium': '0 20px 40px -15px rgba(0,0,0,0.06)',
+                        'floating': '0 30px 60px -12px rgba(176,26,44,0.12)',
                     }
                 }
             }
@@ -39,892 +52,1078 @@
     </script>
 
     <style>
-        /* Custom Properties & Utilities */
-        :root {
-            --color-bg: #FAF7F2;
-            --color-surface: #F1ECE3;
-            --color-text: #2B2622;
-            --color-terracotta: #D98C6B;
-        }
-        
         body {
-            background-color: var(--color-bg);
-            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            background-color: #F4F2EE; /* Accurate base cream color from image_a39874.jpg */
+            color: #222222;
             overflow-x: hidden;
         }
 
-        /* Premium multi-layered shadow */
-        .premium-shadow {
-            box-shadow: 
-                0 4px 6px -1px rgba(43, 38, 34, 0.03), 
-                0 10px 15px -3px rgba(43, 38, 34, 0.05), 
-                0 20px 25px -5px rgba(43, 38, 34, 0.04),
-                0 0 40px -10px rgba(217, 140, 107, 0.05); /* soft terracotta glow */
+        .heading-serif {
+            font-family: 'Playfair Display', serif;
         }
 
-        /* Button hover states */
-        .btn-primary {
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
-        }
-        .btn-primary:hover {
-            box-shadow: 0 10px 25px -5px rgba(217, 140, 107, 0.4);
-        }
-        
-        .btn-outline {
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease, background-color 0.3s ease;
-        }
-        .btn-outline:hover {
-            background-color: rgba(43, 38, 34, 0.03);
+        /* Smooth glass effect matching high design aesthetics */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
-        /* 3D Canvas Background Blending */
-        .canvas-container {
-            background: radial-gradient(circle at center, rgba(241, 236, 227, 0.8) 0%, rgba(250, 247, 242, 0) 70%);
-            mask-image: radial-gradient(black, transparent 80%);
-            -webkit-mask-image: radial-gradient(black, transparent 80%);
+        /* Floating animations for basil leaves and details inspired by image_a39874.jpg */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(8deg); }
+        }
+        @keyframes float-medium {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(-15deg); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* 3D Tilt Card Base */
-        .tilt-card {
-            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-            will-change: transform;
-        }
-        .tilt-card-content {
-            transform: translateZ(30px); /* Parallax inner text */
-        }
+        .animate-float-1 { animation: float-slow 8s ease-in-out infinite; }
+        .animate-float-2 { animation: float-medium 12s ease-in-out infinite; }
+        .animate-float-3 { animation: float-slow 10s ease-in-out infinite 2s; }
+        .animate-spin-slow { animation: spin-slow 75s linear infinite; }
 
-        /* Scroll Reveal Utility */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
-            will-change: opacity, transform;
+        /* Custom elegant scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        ::-webkit-scrollbar-track {
+            background: #F4F2EE;
         }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
-
-        /* Form styling */
-        input, select {
-            background: transparent;
-            border-bottom: 1px solid var(--color-text);
-            border-radius: 0;
-            padding: 0.5rem 0;
-            width: 100%;
-            transition: border-color 0.3s ease;
-            outline: none;
+        ::-webkit-scrollbar-thumb {
+            background: #DDD9D0;
+            border-radius: 4px;
         }
-        input:focus, select:focus {
-            border-bottom-color: var(--color-terracotta);
-        }
-        input::placeholder {
-            color: rgba(43, 38, 34, 0.5);
-        }
-
-        /* Make entire date input clickable without JS (fixes iframe security issue) */
-        input[type="date"] {
-            position: relative;
-        }
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B01A2C;
         }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-brand-terracotta selection:text-white">
+<body class="antialiased min-h-screen">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 py-6 px-8 flex justify-between items-center mix-blend-difference text-brand-surface pointer-events-none">
-        <div class="font-serif text-2xl tracking-wide pointer-events-auto cursor-pointer">E&O</div>
-        <div class="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase pointer-events-auto">
-            <a href="#story" class="hover:text-brand-terracotta transition-colors">Story</a>
-            <a href="#menu" class="hover:text-brand-terracotta transition-colors">Menu</a>
-            <a href="#reserve" class="hover:text-brand-terracotta transition-colors">Reserve</a>
-        </div>
-    </nav>
+    <!-- Top Promotional Alert Bar -->
+    <div id="promo-banner" class="bg-brand text-white text-xs py-2.5 px-4 text-center font-medium relative transition-all duration-300">
+        <span>✨ Savor Michelin-star inspired recipes. Book a table online tonight for exclusive early booking specials!</span>
+        <button onclick="document.getElementById('promo-banner').style.display='none'" class="absolute right-4 top-1/2 -translate-y-1/2 hover:text-gray-200">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
 
-    <!-- 1. HERO SECTION -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden lg:justify-start lg:pl-32">
-        
-        <!-- 3D Canvas Container -->
-        <div id="canvas-container" class="canvas-container absolute inset-0 z-0 flex justify-center items-center lg:left-1/3 lg:w-2/3">
-            <!-- Canvas inserted here by JS -->
-        </div>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-cream-100/80 backdrop-blur-md border-b border-cream-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo Section -->
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="text-3xl font-serif font-bold text-dark-900 tracking-tight transition-transform duration-300 group-hover:scale-105">
+                    <span>Foody</span><span class="text-brand">.</span>
+                </span>
+            </a>
 
-        <div class="relative z-10 w-full max-w-xl px-8 text-center lg:text-left reveal">
-            <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl font-medium text-brand-text mb-6 tracking-tight leading-none drop-shadow-sm">
-                Ember <br/><span class="italic text-brand-sage">&</span> Oak
-            </h1>
-            <p class="text-xl md:text-2xl text-brand-text/80 font-light mb-10 tracking-wide">
-                Modern plates, honest ingredients.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
-                <a href="#reserve" class="btn-primary bg-brand-terracotta text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase hover:scale-103 text-center">
-                    Reserve a Table
+            <!-- Desktop Nav Links (As seen in image_a39874.jpg) -->
+            <nav class="hidden md:flex items-center gap-8 text-[15px] font-medium text-dark-700">
+                <a href="#hero" class="hover:text-brand transition-colors text-brand">Home</a>
+                <a href="#featured" class="hover:text-brand transition-colors">Featured</a>
+                <a href="#menu" class="hover:text-brand transition-colors">Menu</a>
+                <a href="#booking" class="hover:text-brand transition-colors">Book Table</a>
+                <a href="#about" class="hover:text-brand transition-colors">About Us</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Cart Button -->
+                <button onclick="toggleCart()" class="relative p-2.5 text-dark-900 hover:text-brand transition-colors bg-white hover:bg-cream-100 rounded-full shadow-sm">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-brand text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-white animate-pulse">0</span>
+                </button>
+
+                <!-- Action Button -->
+                <a href="#booking" class="hidden sm:inline-flex bg-brand hover:bg-brand-hover text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                    Book Table
                 </a>
-                <a href="#menu" class="btn-outline border border-brand-text text-brand-text px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase hover:scale-103 text-center">
-                    View Menu
-                </a>
+
+                <!-- Mobile Menu Toggle -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-dark-900 hover:text-brand">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
             </div>
         </div>
-    </section>
 
-    <!-- 2. OUR STORY -->
-    <section id="story" class="py-32 px-8 bg-brand-surface/30">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="w-full md:w-1/3 flex justify-center reveal">
-                <!-- Minimal Wine Glass SVG Accent -->
-                <svg width="80" height="160" viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-brand-bronze stroke-current stroke-[1.5]">
-                    <!-- Bowl -->
-                    <path d="M10 20 C 10 70, 40 90, 40 90 C 40 90, 70 70, 70 20 Z" />
-                    <!-- Liquid line -->
-                    <line x1="15" y1="45" x2="65" y2="45" stroke-dasharray="2 4" />
-                    <!-- Stem -->
-                    <line x1="40" y1="90" x2="40" y2="150" />
-                    <!-- Base -->
-                    <line x1="20" y1="150" x2="60" y2="150" />
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream-50 border-t border-cream-200 px-6 py-4 space-y-3 absolute w-full left-0 shadow-lg animate-fadeIn">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block py-2 text-dark-800 hover:text-brand font-medium">Home</a>
+            <a href="#featured" onclick="toggleMobileMenu()" class="block py-2 text-dark-800 hover:text-brand font-medium">Featured</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-dark-800 hover:text-brand font-medium">Menu</a>
+            <a href="#booking" onclick="toggleMobileMenu()" class="block py-2 text-dark-800 hover:text-brand font-medium">Book Table</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-dark-800 hover:text-brand font-medium">About Us</a>
+            <a href="#booking" onclick="toggleMobileMenu()" class="block w-full text-center bg-brand text-white py-2.5 rounded-full font-medium">Book Table Now</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative overflow-hidden min-h-[calc(100vh-5rem)] flex items-center pt-8 pb-16 px-6">
+        <!-- Floating Leaves & Background Elements matching image_a39874.jpg visual depth -->
+        <div class="absolute inset-0 pointer-events-none z-10 overflow-hidden">
+            <!-- Leaf 1 (Top Right) -->
+            <div class="absolute top-[10%] right-[10%] w-12 h-12 md:w-16 md:h-16 animate-float-1 opacity-85">
+                <svg viewBox="0 0 100 100" class="w-full h-full fill-emerald-600 drop-shadow-md">
+                    <path d="M10,90 C40,70 60,70 90,10 C70,40 70,60 10,90 Z" />
+                    <path d="M10,90 Q50,50 90,10" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none" />
                 </svg>
             </div>
-            <div class="w-full md:w-2/3 reveal delay-100">
-                <h2 class="font-serif text-4xl md:text-5xl text-brand-text mb-8">Simple, done well.</h2>
-                <div class="w-12 h-[1px] bg-brand-bronze mb-8"></div>
-                <p class="text-lg text-brand-text/80 leading-relaxed font-light">
-                    Ember & Oak started with one idea: let good ingredients speak for themselves. Our menu changes with the seasons, built around what's fresh from local farms that week. No long lists, no over-plated dishes — just food cooked with care and served without pretense.
+            <!-- Leaf 2 (Bottom Left) -->
+            <div class="absolute bottom-[15%] left-[5%] w-16 h-16 md:w-24 md:h-24 animate-float-2 opacity-75">
+                <svg viewBox="0 0 100 100" class="w-full h-full fill-emerald-700 drop-shadow-lg">
+                    <path d="M10,90 C40,70 60,70 90,10 C70,40 70,60 10,90 Z" transform="rotate(-30, 50, 50)" />
+                </svg>
+            </div>
+            <!-- Leaf 3 (Center Top) -->
+            <div class="absolute top-[40%] left-[45%] w-8 h-8 animate-float-3 opacity-60">
+                <svg viewBox="0 0 100 100" class="w-full h-full fill-emerald-500">
+                    <path d="M10,90 C40,70 60,70 90,10 C70,40 70,60 10,90 Z" transform="rotate(45, 50, 50)" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20">
+            <!-- Left Info Column -->
+            <div class="lg:col-span-6 space-y-8 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm text-xs font-semibold text-brand tracking-wider uppercase border border-cream-200">
+                    <i class="fa-solid fa-star text-amber-400"></i> No.1 Rated Culinary Experience
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-dark-900 leading-[1.15] tracking-tight heading-serif">
+                    it's not just <br>
+                    <span class="text-dark-900">Food, It's an</span> <br>
+                    <span class="text-brand italic font-normal">Experience.</span>
+                </h1>
+
+                <p class="text-dark-700 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+                    Savor the art of gourmet dining, handcrafted by award-winning chefs using premium organic ingredients sourced from local artisan farms.
                 </p>
-            </div>
-        </div>
-    </section>
 
-    <!-- 3. SIGNATURE DISHES -->
-    <section id="menu" class="py-32 px-8">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <h2 class="font-serif text-4xl md:text-5xl text-brand-text mb-4">Signature Dishes</h2>
-                <p class="text-brand-text/60 tracking-widest uppercase text-sm font-medium">A glimpse of the season</p>
+                <!-- Hero Buttons (Matches layout from design image_a39874.jpg) -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#menu" class="w-full sm:w-auto text-center px-8 py-4 bg-brand hover:bg-brand-hover text-white font-medium rounded-full transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5">
+                        View Menu
+                    </a>
+                    <a href="#booking" class="w-full sm:w-auto text-center px-8 py-4 bg-white hover:bg-cream-100 text-dark-900 font-medium rounded-full transition-all border border-cream-300 hover:border-brand">
+                        Book A Table
+                    </a>
+                </div>
+
+                <!-- Ratings / Social Proof (Matches layout from design image_a39874.jpg) -->
+                <div class="pt-6 border-t border-cream-200 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
+                    <div class="flex -space-x-4">
+                        <img class="w-12 h-12 rounded-full border-4 border-cream-100 object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" alt="Customer Ava" onerror="this.src='https://placehold.co/120x120/FAF8F5/D11F36?text=Customer'">
+                        <img class="w-12 h-12 rounded-full border-4 border-cream-100 object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" alt="Customer Ben" onerror="this.src='https://placehold.co/120x120/FAF8F5/D11F36?text=Customer'">
+                        <img class="w-12 h-12 rounded-full border-4 border-cream-100 object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120" alt="Customer Zoe" onerror="this.src='https://placehold.co/120x120/FAF8F5/D11F36?text=Customer'">
+                        <div class="w-12 h-12 rounded-full border-4 border-cream-100 bg-brand text-white flex items-center justify-center text-xs font-bold font-sans">4.9+</div>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <div class="flex items-center justify-center sm:justify-start text-amber-400 gap-1 text-sm">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-xs text-dark-700 mt-1 font-medium">Loved by over <span class="font-bold text-dark-900">4,800+</span> regular diners</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- 2x2 Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <!-- Right Image Column (Direct replication of design layout in image_a39874.jpg) -->
+            <div class="lg:col-span-6 flex justify-center items-center relative py-12">
+                <!-- Outer soft background glow -->
+                <div class="absolute w-[80%] h-[80%] bg-white/40 rounded-full blur-3xl -z-10"></div>
                 
-                <!-- Card 1: Carrots -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal">
-                    <div class="tilt-card-content flex flex-col h-full justify-between">
-                        <div>
-                            <div id="dish1-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
-                            <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Honey Glazed Baby Carrots</h3>
-                                <span class="text-brand-bronze font-serif text-xl">$16</span>
-                            </div>
-                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
+                <!-- Main Food Image with promo tag overlay -->
+                <div class="relative w-[300px] sm:w-[400px] md:w-[450px] lg:w-[480px] aspect-square flex items-center justify-center">
+                    
+                    <!-- Floating Promo Badge from original image_a39874.jpg -->
+                    <div class="absolute top-[10%] left-[0%] z-20 bg-white shadow-xl rounded-2xl p-3.5 flex items-center gap-3 border border-cream-200 animate-bounce" style="animation-duration: 4s;">
+                        <div class="w-10 h-10 bg-brand-light rounded-xl flex items-center justify-center text-brand">
+                            <i class="fa-solid fa-percent text-lg"></i>
                         </div>
-                        <p class="text-brand-text/70 font-light">Roasted heirloom carrots, smoked honey, whipped feta.</p>
+                        <div>
+                            <p class="text-xs font-bold text-dark-900">5% Discount</p>
+                            <p class="text-[10px] text-dark-700">Discount for 2 orders</p>
+                        </div>
+                    </div>
+
+                    <!-- Main Plate Image with spin animation and premium shadow layering -->
+                    <div class="w-[95%] h-[95%] rounded-full overflow-hidden shadow-floating transition-transform duration-700 hover:scale-105 bg-cream-50">
+                        <img class="w-full h-full object-cover animate-spin-slow" src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&q=80&w=800" alt="Gourmet Pasta Plate" onerror="this.src='https://placehold.co/800x800/FAF8F5/D11F36?text=Gourmet+Italian+Pasta'">
+                    </div>
+
+                    <!-- Decorative Floating Tomato right next to the plate -->
+                    <div class="absolute -right-4 top-[35%] w-12 h-12 md:w-16 md:h-16 z-20 animate-float-3">
+                        <!-- Custom styled SVG Tomato to look perfectly flat, delicious, and consistent -->
+                        <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-lg">
+                            <circle cx="50" cy="55" r="40" fill="#E23636" />
+                            <circle cx="45" cy="50" r="38" fill="#F04444" />
+                            <circle cx="35" cy="40" r="10" fill="#FF6B6B" opacity="0.3" />
+                            <!-- Tomato Stem -->
+                            <path d="M50,15 L50,5" stroke="#2D8A4E" stroke-width="6" stroke-linecap="round" />
+                            <path d="M50,15 Q35,10 25,18" stroke="#37A85D" stroke-width="4" stroke-linecap="round" fill="none" />
+                            <path d="M50,15 Q65,10 75,18" stroke="#37A85D" stroke-width="4" stroke-linecap="round" fill="none" />
+                        </svg>
                     </div>
                 </div>
-
-                <!-- Card 2: Mushroom -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal delay-100">
-                    <div class="tilt-card-content flex flex-col h-full justify-between">
-                        <div>
-                            <div id="dish2-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
-                            <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Foraged Mushroom Risotto</h3>
-                                <span class="text-brand-bronze font-serif text-xl">$22</span>
-                            </div>
-                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
-                        </div>
-                        <p class="text-brand-text/70 font-light">Wild mushrooms, aged parmesan, fresh thyme, black pepper.</p>
-                    </div>
-                </div>
-
-                <!-- Card 3: Scallop -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal">
-                    <div class="tilt-card-content flex flex-col h-full justify-between">
-                        <div>
-                            <div id="dish3-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
-                            <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Pan-Seared Scallop</h3>
-                                <span class="text-brand-bronze font-serif text-xl">$28</span>
-                            </div>
-                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
-                        </div>
-                        <p class="text-brand-text/70 font-light">Brown butter, citrus glaze, served in-shell.</p>
-                    </div>
-                </div>
-
-                <!-- Card 4: Tart -->
-                <div class="tilt-card bg-brand-surface rounded-3xl p-8 premium-shadow reveal delay-100">
-                    <div class="tilt-card-content flex flex-col h-full justify-between">
-                        <div>
-                            <div id="dish4-canvas" class="w-full h-48 mb-6 rounded-2xl bg-brand-bg/50 overflow-hidden relative cursor-crosshair"></div>
-                            <div class="flex justify-between items-start gap-4 mb-4">
-                                <h3 class="font-serif text-2xl text-brand-text leading-snug">Lemon Curd Tart</h3>
-                                <span class="text-brand-bronze font-serif text-xl">$14</span>
-                            </div>
-                            <div class="w-full h-[1px] bg-brand-text/10 mb-6"></div>
-                        </div>
-                        <p class="text-brand-text/70 font-light">Shortbread crust, torched meringue top.</p>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <!-- 4. RESERVE A TABLE -->
-    <section id="reserve" class="py-32 px-8 bg-brand-text text-brand-bg">
-        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-20">
+    <!-- Featured Carousel Section (Accurate Replica of image_a39874.jpg bottom slider) -->
+    <section id="featured" class="py-16 bg-cream-50 border-y border-cream-200 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
+                <div>
+                    <h2 class="text-xs font-bold tracking-widest text-brand uppercase mb-2">Chef's Recommendations</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-dark-900 heading-serif">Today's Specials</h3>
+                </div>
+                
+                <!-- Carousel Nav Controls -->
+                <div class="flex items-center gap-3 self-end sm:self-auto">
+                    <button onclick="slideCarousel('prev')" class="w-12 h-12 rounded-full border border-cream-300 hover:border-brand hover:bg-white text-dark-900 hover:text-brand flex items-center justify-center transition-all bg-transparent">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="slideCarousel('next')" class="w-12 h-12 rounded-full bg-brand hover:bg-brand-hover text-white flex items-center justify-center transition-all shadow-md">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carousel Cards Wrapper -->
+            <div class="overflow-hidden py-4">
+                <div id="carousel-track" class="flex gap-6 transition-transform duration-500 ease-out" style="transform: translateX(0px);">
+                    
+                    <!-- Carousel Item 1 -->
+                    <div class="min-w-[280px] sm:min-w-[320px] bg-white rounded-3xl p-6 shadow-premium relative flex flex-col items-center pt-20 mt-16 group hover:shadow-xl transition-all">
+                        <div class="absolute -top-16 w-32 h-32 rounded-full overflow-hidden shadow-lg border-4 border-white transition-transform duration-300 group-hover:scale-105 bg-cream-50">
+                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=300" alt="Pappardelle Special" onerror="this.src='https://placehold.co/300x300/FAF8F5/D11F36?text=Pappardelle'">
+                        </div>
+                        <button onclick="addToCart(1, 'Pappardelle with Vegetable', 35.00, 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=300')" class="absolute top-4 right-4 w-10 h-10 bg-dark-900 hover:bg-brand text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-cart-shopping text-sm"></i>
+                        </button>
+                        <h4 class="text-xl font-bold text-dark-900 mt-2 text-center font-serif">Pappardelle</h4>
+                        <p class="text-xs text-dark-700 mt-1 mb-4 text-center">With Organic Vegetables & Fresh Herbs</p>
+                        <span class="text-lg font-bold text-brand mt-auto font-sans">$35.00</span>
+                    </div>
+
+                    <!-- Carousel Item 2 -->
+                    <div class="min-w-[280px] sm:min-w-[320px] bg-white rounded-3xl p-6 shadow-premium relative flex flex-col items-center pt-20 mt-16 group hover:shadow-xl transition-all">
+                        <div class="absolute -top-16 w-32 h-32 rounded-full overflow-hidden shadow-lg border-4 border-white transition-transform duration-300 group-hover:scale-105 bg-cream-50">
+                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=300" alt="Ravioli Stuffed" onerror="this.src='https://placehold.co/300x300/FAF8F5/D11F36?text=Ravioli+Stuffed'">
+                        </div>
+                        <button onclick="addToCart(2, 'Ravioli Stuffed with Pesto', 35.00, 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=300')" class="absolute top-4 right-4 w-10 h-10 bg-dark-900 hover:bg-brand text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-cart-shopping text-sm"></i>
+                        </button>
+                        <h4 class="text-xl font-bold text-dark-900 mt-2 text-center font-serif">Ravioli Stuffed</h4>
+                        <p class="text-xs text-dark-700 mt-1 mb-4 text-center">With Creamy Basil Pesto Sauce</p>
+                        <span class="text-lg font-bold text-brand mt-auto font-sans">$35.00</span>
+                    </div>
+
+                    <!-- Carousel Item 3 -->
+                    <div class="min-w-[280px] sm:min-w-[320px] bg-white rounded-3xl p-6 shadow-premium relative flex flex-col items-center pt-20 mt-16 group hover:shadow-xl transition-all">
+                        <div class="absolute -top-16 w-32 h-32 rounded-full overflow-hidden shadow-lg border-4 border-white transition-transform duration-300 group-hover:scale-105 bg-cream-50">
+                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&q=80&w=300" alt="Alfredo Supreme" onerror="this.src='https://placehold.co/300x300/FAF8F5/D11F36?text=Alfredo+Supreme'">
+                        </div>
+                        <button onclick="addToCart(3, 'Alfredo Supreme Truffle', 38.00, 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&q=80&w=300')" class="absolute top-4 right-4 w-10 h-10 bg-dark-900 hover:bg-brand text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-cart-shopping text-sm"></i>
+                        </button>
+                        <h4 class="text-xl font-bold text-dark-900 mt-2 text-center font-serif">Alfredo Supreme</h4>
+                        <p class="text-xs text-dark-700 mt-1 mb-4 text-center">Truffle butter and Parmigiano cream</p>
+                        <span class="text-lg font-bold text-brand mt-auto font-sans">$38.00</span>
+                    </div>
+
+                    <!-- Carousel Item 4 -->
+                    <div class="min-w-[280px] sm:min-w-[320px] bg-white rounded-3xl p-6 shadow-premium relative flex flex-col items-center pt-20 mt-16 group hover:shadow-xl transition-all">
+                        <div class="absolute -top-16 w-32 h-32 rounded-full overflow-hidden shadow-lg border-4 border-white transition-transform duration-300 group-hover:scale-105 bg-cream-50">
+                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=300" alt="Tiramisu Classico Dessert" onerror="this.src='https://placehold.co/300x300/FAF8F5/D11F36?text=Tiramisu'">
+                        </div>
+                        <button onclick="addToCart(4, 'Tiramisu Classico', 16.00, 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=300')" class="absolute top-4 right-4 w-10 h-10 bg-dark-900 hover:bg-brand text-white rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-cart-shopping text-sm"></i>
+                        </button>
+                        <h4 class="text-xl font-bold text-dark-900 mt-2 text-center font-serif">Tiramisu Classico</h4>
+                        <p class="text-xs text-dark-700 mt-1 mb-4 text-center">Ladyfingers, espresso, and sweet mascarpone</p>
+                        <span class="text-lg font-bold text-brand mt-auto font-sans">$16.00</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Interactive Menu Section -->
+    <section id="menu" class="py-24 px-6 bg-cream-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs font-bold text-brand tracking-widest uppercase mb-2 block">Our Culinary Masterpieces</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-dark-900 heading-serif">Discover Our Menu</h2>
+                <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded"></div>
+            </div>
+
+            <!-- Categories Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterMenu('all')" class="menu-tab-btn active px-6 py-3 rounded-full font-medium text-sm transition-all shadow-sm bg-brand text-white">
+                    <i class="fa-solid fa-utensils mr-2"></i> All Delicacies
+                </button>
+                <button onclick="filterMenu('pasta')" class="menu-tab-btn px-6 py-3 rounded-full font-medium text-sm transition-all shadow-sm bg-white text-dark-700 hover:bg-cream-200">
+                    <i class="fa-solid fa-plate-wheat mr-2"></i> Signature Pasta
+                </button>
+                <button onclick="filterMenu('pizza')" class="menu-tab-btn px-6 py-3 rounded-full font-medium text-sm transition-all shadow-sm bg-white text-dark-700 hover:bg-cream-200">
+                    <i class="fa-solid fa-pizza-slice mr-2"></i> Artisanal Pizza
+                </button>
+                <button onclick="filterMenu('dessert')" class="menu-tab-btn px-6 py-3 rounded-full font-medium text-sm transition-all shadow-sm bg-white text-dark-700 hover:bg-cream-200">
+                    <i class="fa-solid fa-ice-cream mr-2"></i> Desserts & Treats
+                </button>
+            </div>
+
+            <!-- Menu Grid with Relevant, Working Photos -->
+            <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Menu Item Card 1 -->
+                <div class="menu-item-card bg-white rounded-3xl p-6 shadow-premium hover:shadow-xl transition-all border border-cream-200" data-category="pasta">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 group bg-cream-50">
+                        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=400" alt="Pappardelle Pasta" onerror="this.src='https://placehold.co/400x300/FAF8F5/D11F36?text=Pappardelle'">
+                        <span class="absolute top-4 left-4 bg-brand text-white text-xs font-bold px-3 py-1.5 rounded-full">Chef's Pick</span>
+                    </div>
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark-900 font-serif">Tagliatelle Tartufata</h4>
+                            <p class="text-xs text-dark-700 mt-2 line-clamp-2">Handmade ribbon pasta tossed in rich black truffle cream sauce and genuine Grana Padano.</p>
+                        </div>
+                        <span class="text-xl font-bold text-brand font-sans">$39.00</span>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-cream-100 flex items-center justify-between">
+                        <span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-leaf mr-1"></i> Vegetarian Option</span>
+                        <button onclick="addToCart(5, 'Tagliatelle Tartufata', 39.00, 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=400')" class="px-5 py-2 bg-dark-900 hover:bg-brand text-white text-xs font-medium rounded-full transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add To Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu Item Card 2 -->
+                <div class="menu-item-card bg-white rounded-3xl p-6 shadow-premium hover:shadow-xl transition-all border border-cream-200" data-category="pizza">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 group bg-cream-50">
+                        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=400" alt="Gourmet Prosciutto Pizza" onerror="this.src='https://placehold.co/400x300/FAF8F5/D11F36?text=Prosciutto+Pizza'">
+                    </div>
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark-900 font-serif">San Daniele Prosciutto</h4>
+                            <p class="text-xs text-dark-700 mt-2 line-clamp-2">Stone-baked Neapolitan base, San Marzano tomato base, creamy buffalo mozzarella, and wild arugula.</p>
+                        </div>
+                        <span class="text-xl font-bold text-brand font-sans">$28.00</span>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-cream-100 flex items-center justify-between">
+                        <span class="text-xs text-brand font-medium"><i class="fa-solid fa-award mr-1"></i> Highly Recommended</span>
+                        <button onclick="addToCart(6, 'San Daniele Prosciutto', 28.00, 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=400')" class="px-5 py-2 bg-dark-900 hover:bg-brand text-white text-xs font-medium rounded-full transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add To Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu Item Card 3 -->
+                <div class="menu-item-card bg-white rounded-3xl p-6 shadow-premium hover:shadow-xl transition-all border border-cream-200" data-category="dessert">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 group bg-cream-50">
+                        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400" alt="Chocolate Lava Dessert" onerror="this.src='https://placehold.co/400x300/FAF8F5/D11F36?text=Lava+Cake'">
+                        <span class="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">Pastry Masterclass</span>
+                    </div>
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark-900 font-serif">Dark Chocolate Lava</h4>
+                            <p class="text-xs text-dark-700 mt-2 line-clamp-2">Warm Belgian dark chocolate lava cake served with vanilla bean gelato and wild berries.</p>
+                        </div>
+                        <span class="text-xl font-bold text-brand font-sans">$18.00</span>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-cream-100 flex items-center justify-between">
+                        <span class="text-xs text-amber-600 font-medium"><i class="fa-solid fa-crown mr-1"></i> Best Seller</span>
+                        <button onclick="addToCart(7, 'Dark Chocolate Lava', 18.00, 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400')" class="px-5 py-2 bg-dark-900 hover:bg-brand text-white text-xs font-medium rounded-full transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add To Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu Item Card 4 -->
+                <div class="menu-item-card bg-white rounded-3xl p-6 shadow-premium hover:shadow-xl transition-all border border-cream-200" data-category="pasta">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 group bg-cream-50">
+                        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=400" alt="Ravioli Pesto" onerror="this.src='https://placehold.co/400x300/FAF8F5/D11F36?text=Ravioli+Pesto'">
+                    </div>
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark-900 font-serif">Ravioli Royale</h4>
+                            <p class="text-xs text-dark-700 mt-2 line-clamp-2">Artisanal ravioli pasta stuffed with fresh spinach & ricotta, tossed in basil pesto.</p>
+                        </div>
+                        <span class="text-xl font-bold text-brand font-sans">$35.00</span>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-cream-100 flex items-center justify-between">
+                        <span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-leaf mr-1"></i> Vegetarian Selection</span>
+                        <button onclick="addToCart(8, 'Ravioli Royale', 35.00, 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=400')" class="px-5 py-2 bg-dark-900 hover:bg-brand text-white text-xs font-medium rounded-full transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add To Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu Item Card 5 -->
+                <div class="menu-item-card bg-white rounded-3xl p-6 shadow-premium hover:shadow-xl transition-all border border-cream-200" data-category="pizza">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 group bg-cream-50">
+                        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://images.unsplash.com/photo-1571066811602-71683a3f680d?auto=format&fit=crop&q=80&w=400" alt="Gourmet Funghi Pizza" onerror="this.src='https://placehold.co/400x300/FAF8F5/D11F36?text=Mushroom+Pizza'">
+                    </div>
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark-900 font-serif">Tartufo e Funghi</h4>
+                            <p class="text-xs text-dark-700 mt-2 line-clamp-2">Crispy crust topped with wild forest mushrooms, white truffle oil, and creamy taleggio.</p>
+                        </div>
+                        <span class="text-xl font-bold text-brand font-sans">$32.00</span>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-cream-100 flex items-center justify-between">
+                        <span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-leaf mr-1"></i> Vegetarian Option</span>
+                        <button onclick="addToCart(9, 'Tartufo e Funghi Pizza', 32.00, 'https://images.unsplash.com/photo-1571066811602-71683a3f680d?auto=format&fit=crop&q=80&w=400')" class="px-5 py-2 bg-dark-900 hover:bg-brand text-white text-xs font-medium rounded-full transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add To Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu Item Card 6 -->
+                <div class="menu-item-card bg-white rounded-3xl p-6 shadow-premium hover:shadow-xl transition-all border border-cream-200" data-category="dessert">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-6 group bg-cream-50">
+                        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&q=80&w=400" alt="Lemon Curd Tart" onerror="this.src='https://placehold.co/400x300/FAF8F5/D11F36?text=Lemon+Tart'">
+                    </div>
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 class="text-xl font-bold text-dark-900 font-serif">Meyer Lemon Gold Tart</h4>
+                            <p class="text-xs text-dark-700 mt-2 line-clamp-2">Sweet pastry shell filled with tangy lemon curd, toasted meringue, and fine gold flakes.</p>
+                        </div>
+                        <span class="text-xl font-bold text-brand font-sans">$16.00</span>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-cream-100 flex items-center justify-between">
+                        <span class="text-xs text-amber-600 font-medium"><i class="fa-solid fa-cloud mr-1"></i> Light & Refreshing</span>
+                        <button onclick="addToCart(10, 'Meyer Lemon Gold Tart', 16.00, 'https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&q=80&w=400')" class="px-5 py-2 bg-dark-900 hover:bg-brand text-white text-xs font-medium rounded-full transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add To Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table Reservation Section -->
+    <section id="booking" class="py-24 px-6 bg-cream-50 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 md:p-16 shadow-premium border border-white max-w-4xl mx-auto relative overflow-hidden">
+                <!-- Inner Decorative Basil Elements -->
+                <div class="absolute -right-12 -top-12 w-28 h-28 opacity-40">
+                    <svg viewBox="0 0 100 100" class="w-full h-full fill-emerald-600">
+                        <path d="M10,90 C40,70 60,70 90,10 C70,40 70,60 10,90 Z" />
+                    </svg>
+                </div>
+
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs font-bold text-brand tracking-widest uppercase mb-2 block">Secure Your Table</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark-900 heading-serif">Make A Reservation</h2>
+                    <p class="text-sm text-dark-700 mt-2">Reserve your elegant table for lunch, fine dinner sessions, or private events instantly.</p>
+                </div>
+
+                <form id="reservation-form" onsubmit="handleReservation(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Date Picker -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-dark-900 uppercase tracking-wider"><i class="fa-solid fa-calendar-days mr-1.5 text-brand"></i> Date</label>
+                            <input type="date" required class="w-full bg-cream-100 hover:bg-cream-200 border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900 transition-all font-medium">
+                        </div>
+                        
+                        <!-- Time Slot -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-dark-900 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5 text-brand"></i> Preferred Time</label>
+                            <select required class="w-full bg-cream-100 hover:bg-cream-200 border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900 transition-all font-medium">
+                                <option>12:00 PM - Lunch</option>
+                                <option>01:30 PM - Lunch</option>
+                                <option>06:00 PM - Dinner</option>
+                                <option>07:30 PM - Dinner</option>
+                                <option>09:00 PM - Dinner</option>
+                            </select>
+                        </div>
+
+                        <!-- Guests Count -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-dark-900 uppercase tracking-wider"><i class="fa-solid fa-user-group mr-1.5 text-brand"></i> Diners</label>
+                            <select required class="w-full bg-cream-100 hover:bg-cream-200 border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900 transition-all font-medium">
+                                <option>1 Person</option>
+                                <option>2 Persons</option>
+                                <option>4 Persons</option>
+                                <option>6 Persons</option>
+                                <option>Private Group (10+)</option>
+                            </select>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-dark-900 uppercase tracking-wider"><i class="fa-solid fa-user mr-1.5 text-brand"></i> Full Name</label>
+                            <input type="text" placeholder="e.g. Eleanor Vance" required class="w-full bg-cream-100 hover:bg-cream-200 border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900 transition-all">
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-dark-900 uppercase tracking-wider"><i class="fa-solid fa-envelope mr-1.5 text-brand"></i> Email Address</label>
+                            <input type="email" placeholder="e.g. eleanor@domain.com" required class="w-full bg-cream-100 hover:bg-cream-200 border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900 transition-all">
+                        </div>
+
+                        <!-- Seating Preference -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-dark-900 uppercase tracking-wider"><i class="fa-solid fa-chair mr-1.5 text-brand"></i> Seating Preference</label>
+                            <select class="w-full bg-cream-100 hover:bg-cream-200 border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900 transition-all font-medium">
+                                <option>No preference</option>
+                                <option>Window Side Table</option>
+                                <option>Outdoor Garden View</option>
+                                <option>Cosy Private Booth</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-4">
+                        <button type="submit" class="w-full md:w-auto px-10 py-4 bg-brand hover:bg-brand-hover text-white text-sm font-semibold rounded-full transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5">
+                            Confirm My Booking
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Status Banner -->
+                <div id="booking-success-message" class="hidden mt-8 p-6 bg-emerald-50 text-emerald-800 rounded-2xl border border-emerald-200 flex items-center gap-4 animate-fadeIn">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Reservation Successful!</h4>
+                        <p class="text-xs mt-1">A confirmation voucher along with seating coordinates has been dispatched to your email.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story / About Section -->
+    <section id="about" class="py-24 px-6 bg-cream-100 border-t border-cream-200">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
-            <!-- Left: Form -->
-            <div class="w-full lg:w-1/2 reveal">
-                <h2 class="font-serif text-4xl md:text-5xl mb-12">We'd love to have you.</h2>
-                
-                <!-- Success Message Container -->
-                <div id="reservation-success" class="hidden flex-col items-start justify-center h-full space-y-6 py-8">
-                    <div class="w-16 h-16 rounded-full border border-brand-terracotta flex items-center justify-center text-brand-terracotta mb-2">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"></path></svg>
+            <!-- Left Grid Images with decorative stacking -->
+            <div class="lg:col-span-6 grid grid-cols-12 gap-4 relative">
+                <div class="col-span-8 rounded-3xl overflow-hidden shadow-premium aspect-[4/5] bg-cream-50">
+                    <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&q=80&w=500" alt="Executive Chef Stefano" onerror="this.src='https://placehold.co/500x600'">
+                </div>
+                <div class="col-span-4 flex flex-col gap-4 self-end">
+                    <div class="rounded-2xl overflow-hidden shadow-premium aspect-square bg-cream-50">
+                        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=350" alt="Kitchen Prep Work" onerror="this.src='https://placehold.co/350x350'">
                     </div>
-                    <h3 class="font-serif text-3xl text-brand-bg">Request Received.</h3>
-                    <p class="text-brand-bg/80 font-light text-lg leading-relaxed">
-                        Thank you for choosing Ember & Oak. We've sent an email with your reservation details to your inbox. We look forward to hosting you.
-                    </p>
-                    <button onclick="window.location.reload()" class="btn-outline border border-brand-bg/30 text-brand-bg px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase hover:bg-white/5 mt-4 transition-colors">
-                        Book Another
-                    </button>
+                    <div class="rounded-2xl overflow-hidden shadow-premium aspect-square bg-cream-50">
+                        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=350" alt="Restaurant Interior" onerror="this.src='https://placehold.co/350x350'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Culinary Description -->
+            <div class="lg:col-span-6 space-y-8">
+                <span class="text-xs font-bold text-brand tracking-widest uppercase mb-2 block">Our Passion & Vision</span>
+                <h2 class="text-4xl font-bold text-dark-900 heading-serif leading-tight">Crafting Gastronomic Excellence Since 2012</h2>
+                <p class="text-dark-700 leading-relaxed font-light">
+                    Every plate created in our kitchen represents a celebration of deep-rooted heritage infused with state-of-the-art modern cooking techniques. We prioritize organically grown raw ingredients to ensure ultimate flavor integrity.
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-brand-light text-brand rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-dark-900 text-sm">100% Eco-Organic</h4>
+                            <p class="text-xs text-dark-700 mt-1">Sourced directly from certified welfare farms daily.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-brand-light text-brand rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-champagne-glasses"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-dark-900 text-sm">Master Sommelier</h4>
+                            <p class="text-xs text-dark-700 mt-1">Over 250+ cellared vintage selections curated.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <form id="reservation-form" class="space-y-10">
+                <div class="p-6 bg-white rounded-2xl border-l-4 border-brand shadow-sm flex items-center gap-4">
+                    <img class="w-12 h-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=100" alt="Chef Stefano Moretti" onerror="this.src='https://placehold.co/100x100'">
                     <div>
-                        <input type="text" placeholder="Full Name" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
+                        <p class="text-sm font-bold text-dark-900">Chef Stefano Moretti</p>
+                        <p class="text-xs text-dark-700">Founder & Michelin Starred Culinary Mastermind</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <input type="email" placeholder="Email Address" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
-                        <input type="tel" placeholder="Contact Number" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta" required>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Diners Reviews Section -->
+    <section class="py-24 px-6 bg-cream-50 border-t border-cream-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs font-bold text-brand tracking-widest uppercase mb-2 block">Diners Testimonials</span>
+                <h2 class="text-4xl font-bold text-dark-900 heading-serif">Words from Our Patrons</h2>
+                <p class="text-sm text-dark-700 mt-2">Hear directly from regular culinary explorers who savor our gourmet plates daily.</p>
+            </div>
+
+            <!-- Pre-existing Reviews List & Dynamic Inputs -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Reviews Board (Left) -->
+                <div class="lg:col-span-7 space-y-6" id="reviews-board">
+                    <!-- Review Card 1 -->
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-cream-200 flex flex-col sm:flex-row gap-4">
+                        <img class="w-12 h-12 rounded-full object-cover shrink-0" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100" alt="Gabriella Rossi Avatar" onerror="this.src='https://placehold.co/100x100'">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-dark-900 text-sm">Gabriella Rossi</h4>
+                                <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-medium"><i class="fa-solid fa-circle-check"></i> Verified Patron</span>
+                            </div>
+                            <div class="flex text-amber-400 gap-0.5 my-1 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-xs text-dark-700 leading-relaxed italic">"The Tagliatelle Tartufata was an absolute revelation! Perfectly al dente ribbons, rich aroma, and the ambience was incredibly cozy."</p>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <input type="date" class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta cursor-pointer bg-transparent" style="color-scheme: dark;" required>
-                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent cursor-pointer" required>
-                            <option value="" disabled selected class="text-brand-text">Time</option>
-                            <option value="17:30" class="text-brand-text">5:30 PM</option>
-                            <option value="18:00" class="text-brand-text">6:00 PM</option>
-                            <option value="18:30" class="text-brand-text">6:30 PM</option>
-                            <option value="19:00" class="text-brand-text">7:00 PM</option>
-                            <option value="19:30" class="text-brand-text">7:30 PM</option>
-                            <option value="20:00" class="text-brand-text">8:00 PM</option>
-                            <option value="20:30" class="text-brand-text">8:30 PM</option>
-                            <option value="21:00" class="text-brand-text">9:00 PM</option>
-                        </select>
+
+                    <!-- Review Card 2 -->
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-cream-200 flex flex-col sm:flex-row gap-4">
+                        <img class="w-12 h-12 rounded-full object-cover shrink-0" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=100" alt="Marcus Vance Avatar" onerror="this.src='https://placehold.co/100x100'">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-dark-900 text-sm">Marcus Vance</h4>
+                                <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-medium"><i class="fa-solid fa-circle-check"></i> Verified Patron</span>
+                            </div>
+                            <div class="flex text-amber-400 gap-0.5 my-1 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <p class="text-xs text-dark-700 leading-relaxed italic">"Incredibly professional service. The staff took amazing care of our large private anniversary group. The San Daniele pizza is a must-try!"</p>
+                        </div>
                     </div>
-                    <div>
-                        <select class="border-brand-bg/30 text-brand-bg focus:border-brand-terracotta appearance-none bg-transparent cursor-pointer" required>
-                            <option value="" disabled selected class="text-brand-text">Party Size</option>
-                            <option value="1" class="text-brand-text">1 Person</option>
-                            <option value="2" class="text-brand-text">2 People</option>
-                            <option value="3" class="text-brand-text">3 People</option>
-                            <option value="4" class="text-brand-text">4 People</option>
-                            <option value="5" class="text-brand-text">5 People</option>
-                            <option value="6" class="text-brand-text">6+ People</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-primary w-full bg-brand-terracotta text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase hover:scale-103 mt-4">
-                        Request Reservation
-                    </button>
+                </div>
+
+                <!-- Live Form to submit reviews (Right) -->
+                <div class="lg:col-span-5 bg-white p-8 rounded-3xl border border-cream-200 shadow-premium">
+                    <h3 class="text-xl font-bold text-dark-900 heading-serif mb-4">Share Your Experience</h3>
+                    <form onsubmit="handleReviewSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-dark-900 uppercase mb-2">Your Name</label>
+                            <input type="text" id="reviewer-name" required placeholder="e.g. Liam Cunningham" class="w-full bg-cream-100 focus:bg-white border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-dark-900 uppercase mb-2">Rating</label>
+                            <select id="reviewer-rating" class="w-full bg-cream-100 focus:bg-white border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900 font-medium">
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent (5 Stars)</option>
+                                <option value="4">⭐⭐⭐⭐ Great (4 Stars)</option>
+                                <option value="3">⭐⭐⭐ Good (3 Stars)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-dark-900 uppercase mb-2">Your Thoughts</label>
+                            <textarea id="reviewer-text" rows="3" required placeholder="How was your dinner? Share your favorite dish!" class="w-full bg-cream-100 focus:bg-white border-0 focus:ring-2 focus:ring-brand rounded-2xl py-3 px-4 text-sm text-dark-900"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-brand hover:bg-brand-hover text-white rounded-full font-semibold text-sm transition-all shadow">
+                            Submit My Review
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Area -->
+    <footer class="bg-dark-900 text-cream-200 pt-16 pb-8 px-6 border-t border-dark-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-12 border-b border-dark-800">
+            <!-- Col 1: Brand -->
+            <div class="space-y-4">
+                <h3 class="text-2xl font-serif font-bold text-white tracking-tight">
+                    <span>Foody</span><span class="text-brand">.</span>
+                </h3>
+                <p class="text-xs text-gray-400 leading-relaxed font-light">
+                    Savor Italian craftsmanship combined with high-end modern details. Perfected over centuries of tradition, tailored for the modern palette.
+                </p>
+                <div class="flex items-center gap-3">
+                    <a href="#" class="w-9 h-9 rounded-full bg-dark-800 hover:bg-brand text-white flex items-center justify-center transition-colors text-xs"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-dark-800 hover:bg-brand text-white flex items-center justify-center transition-colors text-xs"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-dark-800 hover:bg-brand text-white flex items-center justify-center transition-colors text-xs"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Col 2: Opening Hours -->
+            <div class="space-y-4">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider">Opening Hours</h4>
+                <ul class="text-xs text-gray-400 space-y-2 font-light">
+                    <li><strong class="text-white">Monday - Friday:</strong> 11:30 AM - 10:00 PM</li>
+                    <li><strong class="text-white">Saturday:</strong> 11:00 AM - 11:00 PM</li>
+                    <li><strong class="text-white">Sunday:</strong> 11:00 AM - 9:30 PM</li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Navigation -->
+            <div class="space-y-4">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider">Quick Navigation</h4>
+                <ul class="text-xs text-gray-400 space-y-2 font-light">
+                    <li><a href="#hero" class="hover:text-brand transition-colors">Home Base</a></li>
+                    <li><a href="#featured" class="hover:text-brand transition-colors">Gourmet Specials</a></li>
+                    <li><a href="#menu" class="hover:text-brand transition-colors">Full Categorized Menu</a></li>
+                    <li><a href="#booking" class="hover:text-brand transition-colors">Book Elegant Table</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Newsletter -->
+            <div class="space-y-4">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider">Newsletter</h4>
+                <p class="text-xs text-gray-400 font-light">Subscribe to unlock premium wine invitations, dining masterclasses, and priority booking tickets.</p>
+                <form onsubmit="event.preventDefault(); this.reset();" class="flex gap-2">
+                    <input type="email" placeholder="Your best email..." required class="bg-dark-800 border-0 focus:ring-1 focus:ring-brand rounded-2xl px-4 py-2.5 text-xs text-white grow">
+                    <button type="submit" class="bg-brand hover:bg-brand-hover text-white text-xs font-semibold px-4 rounded-2xl transition-all">Join</button>
                 </form>
             </div>
+        </div>
 
-            <!-- Right: Contact Details -->
-            <div class="w-full lg:w-1/2 flex flex-col justify-center reveal delay-100">
-                <div class="p-12 border border-brand-bg/10 rounded-3xl backdrop-blur-sm bg-white/5">
-                    <ul class="space-y-8 text-lg font-light tracking-wide text-brand-bg/80">
-                        <li class="flex items-start gap-4">
-                            <span class="text-brand-terracotta">·</span>
-                            214 Maple Street, Portland, OR 97209
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span class="text-brand-terracotta">·</span>
-                            (503) 555-0148
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span class="text-brand-terracotta">·</span>
-                            Tuesday–Sunday, 5:30 PM – 10:00 PM <br/>
-                            Closed Mondays.
-                        </li>
-                    </ul>
-                </div>
+        <div class="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-[11px] text-gray-400">&copy; 2026 Foody Premium Restaurant Group. All Rights Reserved.</p>
+            <div class="flex items-center gap-6 text-[11px] text-gray-400">
+                <a href="#" class="hover:text-brand">Privacy Policy</a>
+                <a href="#" class="hover:text-brand">Terms of Service</a>
             </div>
-
-        </div>
-    </section>
-
-    <!-- 5. FOOTER -->
-    <footer class="py-12 px-8 border-t border-brand-text/10 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="font-serif text-2xl text-brand-text tracking-widest">
-            Ember & Oak
-        </div>
-        <div class="flex gap-8 text-sm tracking-widest uppercase font-medium">
-            <a href="#menu" class="hover:text-brand-terracotta transition-colors">Menu</a>
-            <a href="#reserve" class="hover:text-brand-terracotta transition-colors">Reserve</a>
-            <a href="#" class="hover:text-brand-terracotta transition-colors">Contact</a>
-        </div>
-        <div class="flex gap-6 text-sm tracking-widest uppercase text-brand-text/60">
-            <a href="#" class="hover:text-brand-terracotta transition-colors">IG</a>
-            <a href="#" class="hover:text-brand-terracotta transition-colors">FB</a>
         </div>
     </footer>
 
-    <!-- INTERACTION & 3D ENGINE SCRIPTS -->
-    <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-        // --- 0. Form Submission Handling ---
-        const reservationForm = document.getElementById('reservation-form');
-        const successMessage = document.getElementById('reservation-success');
+    <!-- SLIDE-OUT CART SIDEBAR DRAWER -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-l border-cream-200">
+        <!-- Cart Header -->
+        <div class="p-6 border-b border-cream-200 flex items-center justify-between bg-cream-50">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-bag-shopping text-brand text-xl"></i>
+                <h3 class="text-lg font-bold text-dark-900 heading-serif">Your Cart</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 text-dark-900 hover:text-brand transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
 
-        if (reservationForm && successMessage) {
-            reservationForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                // UX: Button loading state
-                const submitBtn = reservationForm.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerText;
-                submitBtn.innerText = 'Processing...';
-                submitBtn.style.opacity = '0.7';
+        <!-- Cart Items Container -->
+        <div id="cart-items-list" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div class="text-center py-12 text-dark-700">
+                <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-cream-300"></i>
+                <p class="text-sm">Your gourmet order list is empty.</p>
+                <p class="text-xs text-dark-700 mt-1">Browse our menu and pick some masterworks!</p>
+            </div>
+        </div>
 
-                // Simulate brief network delay for realism
-                setTimeout(() => {
-                    reservationForm.classList.add('hidden');
-                    successMessage.classList.remove('hidden');
-                    successMessage.classList.add('flex');
-                    successMessage.style.animation = 'fadeIn 0.5s ease-out forwards';
-                }, 800);
-            });
-        }
+        <!-- Cart Footer / Summary -->
+        <div class="p-6 border-t border-cream-200 bg-cream-50 space-y-4">
+            <div class="flex items-center justify-between text-sm text-dark-700">
+                <span>Items Subtotal:</span>
+                <span id="cart-subtotal" class="font-bold">$0.00</span>
+            </div>
+            <div class="flex items-center justify-between text-sm text-dark-700">
+                <span>Eco Tax & Service (3%):</span>
+                <span id="cart-tax" class="font-bold">$0.00</span>
+            </div>
+            <div class="flex items-center justify-between text-base font-bold text-dark-900 pt-2 border-t border-cream-200">
+                <span>Grand Total:</span>
+                <span id="cart-total" class="text-brand">$0.00</span>
+            </div>
 
-        // --- 1. UI Interactions (Vanilla Scroll Reveals & Tilt Cards) ---
-        
-        // Scroll Reveal Observer
-        const revealCallback = (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
+            <button onclick="checkoutOrder()" class="w-full py-4 bg-brand hover:bg-brand-hover text-white font-bold rounded-2xl transition-all shadow-md text-sm">
+                Proceed to Secure Checkout
+            </button>
+        </div>
+    </div>
+    <!-- Cart Backdrop overlay -->
+    <div id="cart-backdrop" onclick="toggleCart()" class="fixed inset-0 bg-dark-900/40 backdrop-blur-xs z-40 hidden"></div>
+
+
+    <!-- JAVASCRIPT LOGIC BLOCK -->
+    <script>
+        // Global Cart Array State
+        let cart = [];
+        let carouselIndex = 0;
+
+        // Carousel Slider function
+        function slideCarousel(direction) {
+            const track = document.getElementById('carousel-track');
+            const itemsCount = track.children.length;
+            const cardWidth = track.children[0].offsetWidth + 24; // Width + gap
+            const maxIndex = itemsCount - Math.floor(track.parentElement.offsetWidth / cardWidth);
+
+            if (direction === 'next') {
+                if (carouselIndex < maxIndex) {
+                    carouselIndex++;
+                } else {
+                    carouselIndex = 0; // Wrap around
                 }
-            });
-        };
-        const revealOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
-        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-        // 3D Tilt Card Effect
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (!prefersReducedMotion) {
-            document.querySelectorAll('.tilt-card').forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg
-                    const rotateY = ((x - centerX) / centerX) * 10;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-                });
-            });
-        }
-
-
-        // --- 2. THREE.JS 3D Hero Scene ---
-
-        const container = document.getElementById('canvas-container');
-        
-        // WebGL Support Check
-        function isWebGLAvailable() {
-            try {
-                const canvas = document.createElement('canvas');
-                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-            } catch (e) {
-                return false;
-            }
-        }
-
-        if (!isWebGLAvailable()) {
-            // Fallback gracefully
-            container.innerHTML = '<div class="w-full h-full opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-terracotta to-transparent rounded-full blur-3xl"></div>';
-        } else {
-            init3DScene();
-        }
-
-        function init3DScene() {
-            // Scene Setup
-            const scene = new THREE.Scene();
-            // Optional subtle fog matching background
-            scene.fog = new THREE.FogExp2(0xFAF7F2, 0.04);
-
-            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-            camera.position.set(0, 5, 10);
-            camera.lookAt(0, 0, 0);
-
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap pixel ratio for performance
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-            container.appendChild(renderer.domElement);
-
-            // Group for all plate items
-            const plateGroup = new THREE.Group();
-            scene.add(plateGroup);
-
-            // --- Geometries & Materials ---
-            
-            // 1. Ceramic Plate
-            const plateGeo = new THREE.CylinderGeometry(3.5, 3.0, 0.2, 64);
-            const plateMat = new THREE.MeshStandardMaterial({ 
-                color: 0xF1ECE3, 
-                roughness: 0.15, 
-                metalness: 0.05 
-            });
-            const plate = new THREE.Mesh(plateGeo, plateMat);
-            plate.position.y = -0.1;
-            plate.receiveShadow = true;
-            plate.castShadow = true;
-            plateGroup.add(plate);
-
-            // Inner Plate Rim (Subtle detail)
-            const rimGeo = new THREE.TorusGeometry(3.2, 0.05, 16, 64);
-            const rim = new THREE.Mesh(rimGeo, plateMat);
-            rim.rotation.x = Math.PI / 2;
-            rim.position.y = 0.02;
-            plateGroup.add(rim);
-
-            // 2. Whipped Burrata (Central, soft, abstract)
-            const burrataGeo = new THREE.SphereGeometry(1.2, 64, 32);
-            burrataGeo.scale(1, 0.6, 1); // squashed organic shape
-            
-            // Alter vertices slightly for organic look
-            const pos = burrataGeo.attributes.position;
-            for(let i=0; i<pos.count; i++) {
-                const y = pos.getY(i);
-                if (y > 0) pos.setY(i, y + Math.random()*0.1);
-            }
-            burrataGeo.computeVertexNormals();
-
-            const burrataMat = new THREE.MeshStandardMaterial({ 
-                color: 0xffffff, 
-                roughness: 0.3,
-                metalness: 0.0
-            });
-            const burrata = new THREE.Mesh(burrataGeo, burrataMat);
-            burrata.position.set(0, 0.4, 0);
-            burrata.castShadow = true;
-            burrata.receiveShadow = true;
-            plateGroup.add(burrata);
-
-            // 3. Charred Heirloom Carrots (Intersecting cylinders)
-            const carrotMat = new THREE.MeshStandardMaterial({ 
-                color: 0xD98C6B, 
-                roughness: 0.8,
-                metalness: 0.1
-            });
-            
-            const createCarrot = (x, y, z, rotX, rotY, rotZ, scale) => {
-                const geo = new THREE.CylinderGeometry(0.15, 0.05, 2.5, 16);
-                geo.translate(0, 1.25, 0); // Move origin to base
-                const mesh = new THREE.Mesh(geo, carrotMat);
-                mesh.position.set(x, y, z);
-                mesh.rotation.set(rotX, rotY, rotZ);
-                mesh.scale.setScalar(scale);
-                mesh.castShadow = true;
-                plateGroup.add(mesh);
-            };
-
-            createCarrot(0.2, 0.2, -0.5, Math.PI/2 - 0.2, 0.5, 0, 1);
-            createCarrot(-0.5, 0.3, 0.2, Math.PI/2 + 0.1, -0.8, 0, 0.9);
-            createCarrot(0.4, 0.1, 0.5, Math.PI/2, 2.5, 0, 1.1);
-
-            // 4. Accent Leaves / Sage drops
-            const leafGeo = new THREE.SphereGeometry(0.1, 8, 8);
-            leafGeo.scale(1, 0.2, 2);
-            const leafMat = new THREE.MeshStandardMaterial({ color: 0x7C8B6F, roughness: 0.6 });
-            
-            const leaf1 = new THREE.Mesh(leafGeo, leafMat);
-            leaf1.position.set(1.5, 0.1, 1.0);
-            leaf1.rotation.y = 0.5;
-            plateGroup.add(leaf1);
-            
-            const leaf2 = new THREE.Mesh(leafGeo, leafMat);
-            leaf2.position.set(-1.2, 0.1, -1.5);
-            leaf2.rotation.y = -1.2;
-            plateGroup.add(leaf2);
-
-            // 5. Metallic Fork (Resting beside the plate)
-            const forkGroup = new THREE.Group();
-            const metalMat = new THREE.MeshStandardMaterial({ 
-                color: 0xcccccc, 
-                roughness: 0.2, 
-                metalness: 0.8 
-            });
-            
-            // Handle
-            const handleGeo = new THREE.BoxGeometry(0.2, 0.05, 2.5);
-            const handle = new THREE.Mesh(handleGeo, metalMat);
-            handle.position.z = 1.25;
-            forkGroup.add(handle);
-            
-            // Neck
-            const neckGeo = new THREE.BoxGeometry(0.3, 0.05, 0.5);
-            const neck = new THREE.Mesh(neckGeo, metalMat);
-            neck.position.z = -0.25;
-            forkGroup.add(neck);
-
-            // Prongs
-            for(let i=0; i<4; i++) {
-                const prongGeo = new THREE.BoxGeometry(0.04, 0.04, 0.8);
-                const prong = new THREE.Mesh(prongGeo, metalMat);
-                prong.position.set(-0.11 + (i * 0.073), -0.02, -0.9);
-                // Slight curve down
-                prong.rotation.x = 0.1;
-                forkGroup.add(prong);
-            }
-
-            forkGroup.position.set(4.5, 0, 0);
-            forkGroup.rotation.y = -0.2;
-            forkGroup.castShadow = true;
-            scene.add(forkGroup);
-
-            // --- Particles (Steam Wisps) ---
-            const particleCount = 40;
-            const particlesGeo = new THREE.BufferGeometry();
-            const particlePos = new Float32Array(particleCount * 3);
-            const particleVel = [];
-
-            for(let i=0; i<particleCount; i++) {
-                particlePos[i*3] = (Math.random() - 0.5) * 2;     // x
-                particlePos[i*3+1] = Math.random() * 2;           // y
-                particlePos[i*3+2] = (Math.random() - 0.5) * 2;   // z
-                particleVel.push({
-                    y: 0.01 + Math.random() * 0.02,
-                    x: (Math.random() - 0.5) * 0.01,
-                    z: (Math.random() - 0.5) * 0.01
-                });
-            }
-            particlesGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
-            
-            // Custom soft circle for particles
-            const createCircleTexture = () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = 32;
-                canvas.height = 32;
-                const ctx = canvas.getContext('2d');
-                const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-                gradient.addColorStop(0, 'rgba(255,255,255,0.4)');
-                gradient.addColorStop(1, 'rgba(255,255,255,0)');
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, 32, 32);
-                return new THREE.CanvasTexture(canvas);
-            };
-
-            const particleMat = new THREE.PointsMaterial({
-                size: 0.8,
-                map: createCircleTexture(),
-                transparent: true,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending
-            });
-            const particleSystem = new THREE.Points(particlesGeo, particleMat);
-            scene.add(particleSystem);
-
-
-            // --- Lighting ---
-            const ambientLight = new THREE.AmbientLight(0xfff0e6, 1.2); // Warm ambient
-            scene.add(ambientLight);
-
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
-            dirLight.position.set(5, 10, 5);
-            dirLight.castShadow = true;
-            dirLight.shadow.mapSize.width = 1024;
-            dirLight.shadow.mapSize.height = 1024;
-            dirLight.shadow.camera.near = 0.5;
-            dirLight.shadow.camera.far = 25;
-            dirLight.shadow.camera.left = -10;
-            dirLight.shadow.camera.right = 10;
-            dirLight.shadow.camera.top = 10;
-            dirLight.shadow.camera.bottom = -10;
-            scene.add(dirLight);
-
-            // Soft rim light for depth
-            const rimLight = new THREE.PointLight(0xD98C6B, 2, 20);
-            rimLight.position.set(-5, 2, -5);
-            scene.add(rimLight);
-
-            // Ground plane for soft shadows
-            const planeGeo = new THREE.PlaneGeometry(50, 50);
-            const planeMat = new THREE.ShadowMaterial({ opacity: 0.08 });
-            const plane = new THREE.Mesh(planeGeo, planeMat);
-            plane.rotation.x = -Math.PI / 2;
-            plane.position.y = -0.2;
-            plane.receiveShadow = true;
-            scene.add(plane);
-
-
-            // --- State & Animation Management ---
-            let clock = new THREE.Clock();
-            let isVisible = true;
-            const isMobile = window.innerWidth < 768;
-
-            // Intersection Observer to pause rendering when scrolled past Hero
-            const observer = new IntersectionObserver((entries) => {
-                isVisible = entries[0].isIntersecting;
-            }, { threshold: 0 });
-            observer.observe(container);
-
-            // Scroll Parallax connection
-            let scrollY = 0;
-            window.addEventListener('scroll', () => {
-                scrollY = window.scrollY;
-            }, { passive: true });
-
-            // Handle Resize
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-
-            // Animation Loop
-            function animate() {
-                requestAnimationFrame(animate);
-
-                if (!isVisible) return; // Lazy render
-
-                const delta = clock.getDelta();
-                const elapsedTime = clock.getElapsedTime();
-
-                // 1. Camera Parallax based on scroll (Ease back/scale down effect)
-                const targetZ = 10 + (scrollY * 0.015);
-                const targetY = 5 + (scrollY * 0.005);
-                camera.position.z += (targetZ - camera.position.z) * 0.1;
-                camera.position.y += (targetY - camera.position.y) * 0.1;
-                camera.lookAt(0, -scrollY*0.002, 0); // Look slightly down as we pull back
-
-                if (!prefersReducedMotion) {
-                    // 2. Rotate Plate slowly
-                    plateGroup.rotation.y += 0.2 * delta;
-
-                    // 3. Orbiting elements (Leaf variations via sin/cos)
-                    if (!isMobile) {
-                        leaf1.position.x = Math.cos(elapsedTime * 0.8) * 2;
-                        leaf1.position.z = Math.sin(elapsedTime * 0.8) * 2;
-                        leaf1.rotation.y += 0.01;
-
-                        leaf2.position.x = Math.sin(elapsedTime * 0.6 + Math.PI) * 2.2;
-                        leaf2.position.z = Math.cos(elapsedTime * 0.6 + Math.PI) * 2.2;
-                        leaf2.rotation.y -= 0.01;
-                    }
-
-                    // 4. Update Steam Particles
-                    if (!isMobile) {
-                        const positions = particleSystem.geometry.attributes.position.array;
-                        for(let i=0; i<particleCount; i++) {
-                            positions[i*3] += particleVel[i].x;
-                            positions[i*3+1] += particleVel[i].y;
-                            positions[i*3+2] += particleVel[i].z;
-
-                            // Reset particle if too high
-                            if (positions[i*3+1] > 4) {
-                                positions[i*3+1] = 0;
-                                positions[i*3] = (Math.random() - 0.5) * 2;
-                                positions[i*3+2] = (Math.random() - 0.5) * 2;
-                            }
-                        }
-                        particleSystem.geometry.attributes.position.needsUpdate = true;
-                    }
-                }
-
-                renderer.render(scene, camera);
-            }
-
-            animate();
-        }
-
-        // --- 3. Mini 3D Scenes for Menu Cards ---
-        
-        function initMiniScene(containerId, buildDishCallback) {
-            const container = document.getElementById(containerId);
-            if (!container || !isWebGLAvailable()) return;
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 10);
-            camera.position.set(0, 2.5, 4);
-            camera.lookAt(0, 0, 0);
-
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(renderer.domElement);
-
-            const ambientLight = new THREE.AmbientLight(0xfff0e6, 1.8);
-            scene.add(ambientLight);
-            
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
-            dirLight.position.set(3, 5, 2);
-            scene.add(dirLight);
-
-            const dishGroup = new THREE.Group();
-            scene.add(dishGroup);
-
-            // Execute the specific dish geometry builder
-            buildDishCallback(dishGroup);
-
-            // Handle Resize
-            window.addEventListener('resize', () => {
-                if(container.clientWidth > 0) {
-                    camera.aspect = container.clientWidth / container.clientHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(container.clientWidth, container.clientHeight);
-                }
-            });
-
-            // Interactive rotation on hover
-            let isHovered = false;
-            container.addEventListener('mouseenter', () => isHovered = true);
-            container.addEventListener('mouseleave', () => isHovered = false);
-
-            // Lazy rendering to save performance
-            let isVisible = false;
-            const observer = new IntersectionObserver(entries => {
-                isVisible = entries[0].isIntersecting;
-            });
-            observer.observe(container);
-
-            function animateMini() {
-                requestAnimationFrame(animateMini);
-                if (isVisible) {
-                    // Spin faster if hovered
-                    dishGroup.rotation.y += isHovered ? 0.03 : 0.005;
-                    // Gentle bobbing effect
-                    dishGroup.position.y = Math.sin(Date.now() * 0.002) * 0.1;
-                    renderer.render(scene, camera);
+            } else {
+                if (carouselIndex > 0) {
+                    carouselIndex--;
+                } else {
+                    carouselIndex = maxIndex;
                 }
             }
-            animateMini();
+            track.style.transform = `translateX(-${carouselIndex * cardWidth}px)`;
         }
 
-        // Dish 1: Cutesy Carrots
-        initMiniScene('dish1-canvas', (group) => {
-            const carrotMat = new THREE.MeshStandardMaterial({ color: 0xD98C6B, roughness: 0.6 });
-            const greenMat = new THREE.MeshStandardMaterial({ color: 0x7C8B6F, roughness: 0.8 });
-            
-            for(let i=0; i<3; i++) {
-                const body = new THREE.Mesh(new THREE.ConeGeometry(0.25, 1.2, 16), carrotMat);
-                body.rotation.x = Math.PI; // point down
-                body.position.set((i-1)*0.4, 0, (Math.random()-0.5)*0.2);
-                body.rotation.z = (Math.random()-0.5)*0.4;
-                
-                // Cute puff of leaves
-                const leaf = new THREE.Mesh(new THREE.DodecahedronGeometry(0.2), greenMat);
-                leaf.position.y = -0.6; // relative to inverted cone
-                body.add(leaf);
-                
-                group.add(body);
-            }
-            group.position.y = 0.2;
+        // Add dynamically on Window Resize to fix carousel track positions
+        window.addEventListener('resize', () => {
+            const track = document.getElementById('carousel-track');
+            track.style.transform = `translateX(0px)`;
+            carouselIndex = 0;
         });
 
-        // Dish 2: Plump Mushroom
-        initMiniScene('dish2-canvas', (group) => {
-            const stemMat = new THREE.MeshStandardMaterial({ color: 0xF1ECE3, roughness: 0.9 });
-            const capMat = new THREE.MeshStandardMaterial({ color: 0xB8985A, roughness: 0.7 });
-            const spotMat = new THREE.MeshStandardMaterial({ color: 0xF1ECE3, roughness: 1.0 });
+        // Toggle Responsive Mobile Menu Drawer
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
 
-            const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.35, 0.8, 16), stemMat);
-            group.add(stem);
-
-            const cap = new THREE.Mesh(new THREE.SphereGeometry(0.8, 32, 16, 0, Math.PI*2, 0, Math.PI/2), capMat);
-            cap.position.y = 0.3;
-            cap.scale.y = 0.8;
-            group.add(cap);
-
-            // Cute spots
-            const spotPositions = [
-                {x: 0, y: 0.7, z: 0.3, s: 0.15}, {x: 0.4, y: 0.5, z: -0.2, s: 0.12},
-                {x: -0.5, y: 0.4, z: 0.1, s: 0.18}, {x: 0.2, y: 0.4, z: 0.6, s: 0.1}
-            ];
-            spotPositions.forEach(p => {
-                const spot = new THREE.Mesh(new THREE.SphereGeometry(p.s, 8, 8), spotMat);
-                spot.position.set(p.x, p.y, p.z);
-                spot.position.normalize().multiplyScalar(0.78);
-                spot.position.y *= 0.8; 
-                cap.add(spot);
+        // Full Menu Interactive Tab Filter
+        function filterMenu(category) {
+            // Toggle Tab Buttons UI
+            const tabs = document.querySelectorAll('.menu-tab-btn');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-brand', 'text-white', 'active');
+                tab.classList.add('bg-white', 'text-dark-700', 'hover:bg-cream-200');
             });
-            group.position.y = -0.2;
-        });
 
-        // Dish 3: Scallop with Butter
-        initMiniScene('dish3-canvas', (group) => {
-            const shellMat = new THREE.MeshStandardMaterial({ color: 0xD98C6B, roughness: 0.5 });
-            const meatMat = new THREE.MeshStandardMaterial({ color: 0xfff5f0, roughness: 0.2 });
-            const butterMat = new THREE.MeshStandardMaterial({ color: 0xffd966, roughness: 0.1 });
-
-            // Shell
-            const shell = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 16, 0, Math.PI*2, Math.PI/2, Math.PI/2), shellMat);
-            shell.rotation.x = Math.PI;
-            shell.scale.set(1, 0.3, 1);
-            group.add(shell);
-
-            // Plump scallop
-            const meat = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.5, 32), meatMat);
-            meat.position.y = 0.2;
-            group.add(meat);
-
-            // Butter pat
-            const butter = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.1, 0.2), butterMat);
-            butter.position.set(0.1, 0.5, 0.1);
-            butter.rotation.y = 0.5;
-            group.add(butter);
-            
-            group.position.y = -0.2;
-        });
-
-        // Dish 4: Lemon Tart
-        initMiniScene('dish4-canvas', (group) => {
-            const crustMat = new THREE.MeshStandardMaterial({ color: 0xcca300, roughness: 0.8 });
-            const curdMat = new THREE.MeshStandardMaterial({ color: 0xffe666, roughness: 0.3 });
-            const creamMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1 });
-
-            const crust = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.7, 0.3, 32), crustMat);
-            group.add(crust);
-
-            const curd = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.31, 32), curdMat);
-            group.add(curd);
-
-            // Swirly meringue top
-            for(let i=0; i<3; i++) {
-                const cream = new THREE.Mesh(new THREE.SphereGeometry(0.25 - (i*0.08), 16, 16), creamMat);
-                cream.position.y = 0.2 + (i*0.15);
-                cream.position.x = Math.sin(i) * 0.05; // slight twist
-                group.add(cream);
+            // Target current tab
+            const activeTab = Array.from(tabs).find(t => {
+                return t.innerText.toLowerCase().includes(category) || 
+                       (category === 'all' && t.innerText.toLowerCase().includes('all'));
+            });
+            if (activeTab) {
+                activeTab.classList.remove('bg-white', 'text-dark-700', 'hover:bg-cream-200');
+                activeTab.classList.add('bg-brand', 'text-white', 'active');
             }
-            group.position.y = -0.2;
-        });
 
+            // Show/Hide specific item cards
+            const cards = document.querySelectorAll('.menu-item-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                    card.classList.add('animate-fadeIn');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle Cart Drawer Slider state
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            
+            if (drawer.classList.contains('translate-x-full')) {
+                drawer.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+            } else {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+        }
+
+        // Interactive Add To Cart state trigger
+        function addToCart(id, name, price, imageUrl) {
+            // Check if item already exists
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({ id, name, price, imageUrl, qty: 1 });
+            }
+
+            updateCartUI();
+            
+            // Auto open cart for immersive feedback
+            const drawer = document.getElementById('cart-drawer');
+            if (drawer.classList.contains('translate-x-full')) {
+                toggleCart();
+            }
+        }
+
+        // Delete / Decrease Cart item values
+        function updateQuantity(id, action) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            if (action === 'increase') {
+                item.qty++;
+            } else if (action === 'decrease') {
+                item.qty--;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            } else if (action === 'remove') {
+                cart = cart.filter(i => i.id !== id);
+            }
+
+            updateCartUI();
+        }
+
+        // Re-render modern Cart list UI
+        function updateCartUI() {
+            const listContainer = document.getElementById('cart-items-list');
+            const countBadge = document.getElementById('cart-count');
+            const subtotalText = document.getElementById('cart-subtotal');
+            const taxText = document.getElementById('cart-tax');
+            const totalText = document.getElementById('cart-total');
+
+            // Total calculations
+            let totalQty = cart.reduce((acc, i) => acc + i.qty, 0);
+            let subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            let tax = subtotal * 0.03; // Dynamic Eco & service tax rate
+            let grandTotal = subtotal + tax;
+
+            // Save badges
+            countBadge.innerText = totalQty;
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-12 text-dark-700">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-cream-300"></i>
+                        <p class="text-sm">Your gourmet order list is empty.</p>
+                        <p class="text-xs text-dark-700 mt-1">Browse our menu and pick some masterworks!</p>
+                    </div>
+                `;
+            } else {
+                listContainer.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-4 bg-cream-50 p-3 rounded-2xl border border-cream-200">
+                        <img class="w-16 h-16 rounded-xl object-cover shrink-0" src="${item.imageUrl}" alt="${item.name}" onerror="this.src='https://placehold.co/100x100/FAF8F5/D11F36?text=Food'">
+                        <div class="flex-1 min-w-0">
+                            <h5 class="text-xs font-bold text-dark-900 truncate">${item.name}</h5>
+                            <p class="text-xs text-brand font-bold mt-1">$${item.price.toFixed(2)}</p>
+                            <!-- Quantity Controls -->
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="updateQuantity(${item.id}, 'decrease')" class="w-6 h-6 rounded-full bg-white hover:bg-cream-200 text-dark-900 text-xs flex items-center justify-center border border-cream-200">-</button>
+                                <span class="text-xs font-bold text-dark-900">${item.qty}</span>
+                                <button onclick="updateQuantity(${item.id}, 'increase')" class="w-6 h-6 rounded-full bg-white hover:bg-cream-200 text-dark-900 text-xs flex items-center justify-center border border-cream-200">+</button>
+                            </div>
+                        </div>
+                        <button onclick="updateQuantity(${item.id}, 'remove')" class="text-dark-700 hover:text-brand p-2 self-start">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            // Apply calculated currency text outputs
+            subtotalText.innerText = `$${subtotal.toFixed(2)}`;
+            taxText.innerText = `$${tax.toFixed(2)}`;
+            totalText.innerText = `$${grandTotal.toFixed(2)}`;
+        }
+
+        // Demo checkout behavior
+        function checkoutOrder() {
+            if (cart.length === 0) {
+                const emptyWarning = document.createElement('div');
+                emptyWarning.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark-900/60 backdrop-blur-md animate-fadeIn';
+                emptyWarning.innerHTML = `
+                    <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl relative border border-cream-200">
+                        <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3 class="text-xl font-bold font-serif text-dark-900">Your Cart is Empty</h3>
+                        <p class="text-xs text-dark-700 mt-2 leading-relaxed">Add some delicious dishes before proceeding to checkout!</p>
+                        <button onclick="closeModal(this)" class="mt-6 w-full py-3 bg-brand hover:bg-brand-hover text-white rounded-xl text-xs font-bold transition-all">Okay, Let's Add Food</button>
+                    </div>
+                `;
+                document.body.appendChild(emptyWarning);
+                return;
+            }
+            
+            const clientModal = document.createElement('div');
+            clientModal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark-900/60 backdrop-blur-md animate-fadeIn';
+            clientModal.innerHTML = `
+                <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl relative">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-dark-900">Order Dispatched!</h3>
+                    <p class="text-xs text-dark-700 mt-2 leading-relaxed">Your organic dinner order has been sent straight to Chef Stefano's kitchen line!</p>
+                    <button onclick="closeModal(this)" class="mt-6 w-full py-3 bg-brand hover:bg-brand-hover text-white rounded-xl text-xs font-bold transition-all">Wonderful, Thank You</button>
+                </div>
+            `;
+            document.body.appendChild(clientModal);
+            
+            // Reset state
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        // Close dynamic popup modals
+        function closeModal(button) {
+            button.closest('.fixed').remove();
+        }
+
+        // Booking submission mock feedback
+        function handleReservation(event) {
+            event.preventDefault();
+            const message = document.getElementById('booking-success-message');
+            message.classList.remove('hidden');
+            
+            // Auto scroll down to success block smoothly
+            setTimeout(() => {
+                message.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+
+            // Clear input fields
+            event.target.reset();
+        }
+
+        // Testimonial submission mechanism
+        function handleReviewSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('reviewer-name').value;
+            const ratingValue = parseInt(document.getElementById('reviewer-rating').value);
+            const text = document.getElementById('reviewer-text').value;
+            
+            const board = document.getElementById('reviews-board');
+
+            // Generate stars HTML block
+            let starsHTML = '';
+            for (let i = 0; i < ratingValue; i++) {
+                starsHTML += '<i class="fa-solid fa-star"></i>';
+            }
+            if (ratingValue < 5) {
+                for (let i = ratingValue; i < 5; i++) {
+                    starsHTML += '<i class="fa-regular fa-star"></i>';
+                }
+            }
+
+            // Append review node
+            const card = document.createElement('div');
+            card.className = 'bg-white p-6 rounded-3xl shadow-sm border border-cream-200 flex flex-col sm:flex-row gap-4 animate-fadeIn';
+            card.innerHTML = `
+                <img class="w-12 h-12 rounded-full object-cover shrink-0" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100" alt="New Reviewer" onerror="this.src='https://placehold.co/100x100/FAF8F5/D11F36?text=Patron'">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h4 class="font-bold text-dark-900 text-sm">${name}</h4>
+                        <span class="text-[10px] text-brand bg-brand-light px-2 py-0.5 rounded font-medium"><i class="fa-solid fa-fire"></i> New Reviewer</span>
+                    </div>
+                    <div class="flex text-amber-400 gap-0.5 my-1 text-xs">
+                        ${starsHTML}
+                    </div>
+                    <p class="text-xs text-dark-700 leading-relaxed italic">"${text}"</p>
+                </div>
+            `;
+            
+            board.prepend(card);
+            event.target.reset();
+        }
     </script>
 </body>
 </html>
